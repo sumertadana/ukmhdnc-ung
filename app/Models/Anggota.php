@@ -13,6 +13,7 @@ class Anggota extends Model
         'nim',
         'alamat',
         'jk',
+        'fakultas',
         'jurusan',
         'angkatan',
         'status',

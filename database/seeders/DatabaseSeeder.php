@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             AnggotaSeeder::class,
             InventarisSeeder::class,
             PengurusSeeder::class,
+            StrukturSeeder::class,
         ]);
     }
 }

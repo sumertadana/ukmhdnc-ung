@@ -8,18 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="{{ asset("assets/vendor/fontawesome-free/css/all.min.css") }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{ asset("assets/css/sb-admin-2.min.cs") }}s" rel="stylesheet">
-    <link href="{{ asset("assets/vendor/datatables/dataTables.bootstrap4.min.css") }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+
+    @yield('css')
 
 </head>
 
@@ -52,21 +55,34 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0 py-0">
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item my-0 py-0">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#colapsedesa"
-                    aria-expanded="true" aria-controls="colapsedesa">
-                    <i class="fas fa-fw fa-home"></i>
-                    <span>Database</span>
-                </a>
-                <div id="colapsedesa" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('anggota') }}">Anggota</a>
-                        <a class="collapse-item" href="{{ route('inventaris') }}">Inventaris</a>
-                        <a class="collapse-item" href="{{ route('pengurus') }}">Pengurus</a>
-                    </div>
-                </div>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('anggota') }}">
+                    <i class="fas fa-users"></i>
+                    <span>Anggota</span></a>
+            </li>
+
+            <hr class="sidebar-divider my-0 py-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('pengurus') }}">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Pengurus</span></a>
+            </li>
+
+            <hr class="sidebar-divider my-0 py-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('inventaris') }}">
+                    <i class="fas fa-fw fa-boxes"></i>
+                    <span>Inventaris</span></a>
+            </li>
+
+            <hr class="sidebar-divider my-0 py-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('inventaris') }}">
+                    <i class="fas fa-fw fa-newspaper"></i>
+                    <span>Berita</span></a>
             </li>
 
             <!-- Divider -->
@@ -179,23 +195,19 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset("assets/vendor/jquery/jquery.min.js") }}"></script>
-    <script src="{{ asset("assets/js/bootstrap.bundle.min.js") }}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset("assets/vendor/jquery-easing/jquery.easing.min.js") }}"></script>
+    <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{ asset("assets/js/sb-admin-2.min.js") }}"></script>
+    <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
 
     <!-- Page level plugins -->
-    <script src="{{ asset("assets/vendor/datatables/jquery.dataTables.min.js") }}"></script>
-    <script src="{{ asset("assets/vendor/datatables/dataTables.bootstrap4.min.js") }}"></script>
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
+    <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script>
-        $(document).ready( function () {
-        $('#myTable').DataTable();
-    } );
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
     </script>
     @yield('script')
 </body>
