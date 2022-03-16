@@ -80,7 +80,7 @@
             <hr class="sidebar-divider my-0 py-0">
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('inventaris') }}">
+                <a class="nav-link" href="{{ route('berita') }}">
                     <i class="fas fa-fw fa-newspaper"></i>
                     <span>Berita</span></a>
             </li>

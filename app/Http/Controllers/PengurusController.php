@@ -7,6 +7,7 @@ use App\Models\Pengurus;
 use App\Models\Bidang;
 use App\Models\Jabatan;
 use App\Models\Anggota;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class PengurusController extends Controller
@@ -118,7 +119,8 @@ class PengurusController extends Controller
         $update = Pengurus::find($id);
         if ($request->hasFile('foto')) {
             $filename = $request->nama . '.' . $request->foto->extension();
-            $lokasi = public_path('assets/img/pengurus');
+            $lokasi = public_path('assets/img/pengurus/');
+            File::delete($lokasi . $update->foto);
             $request->file('foto')->move($lokasi, $filename);
 
             $update->update(
@@ -159,6 +161,7 @@ class PengurusController extends Controller
     public function destroy($id)
     {
         $hapus = Pengurus::find($id);
+        File::delete('assets/img/pengurus' . $hapus->foto);
         $hapus->delete();
 
         if ($hapus) {

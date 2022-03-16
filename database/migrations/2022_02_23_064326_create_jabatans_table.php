@@ -13,12 +13,12 @@ class CreateJabatansTable extends Migration
      */
     public function up()
     {
-        Schema::create('jabatan', function (Blueprint $table) {
-            $table->id();
-            $table->string('jabatan');
-            $table->integer('kode_bidang');
-            $table->timestamps();
-        });
+        // Schema::create('jabatan', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('jabatan');
+        //     $table->integer('kode_bidang');
+        //     $table->timestamps();
+        // });
     }
 
     /**
