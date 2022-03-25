@@ -9,6 +9,8 @@ use App\Models\Jabatan;
 use App\Models\Anggota;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PengurusController extends Controller
 {
@@ -19,18 +21,21 @@ class PengurusController extends Controller
      */
     public function index()
     {
-        $pengurus = Pengurus::all();
-        $bidang = Bidang::select('kode', 'bidang')->get();
-        $anggota = Anggota::all();
-        return view('admin.pengurus', compact('pengurus', 'bidang', 'anggota'));
+        $pengurus = DB::table('pengurus')
+            ->join('anggota', 'pengurus.nim', '=', 'anggota.nim')
+            ->join('bidang', 'pengurus.id_bidang', '=', 'bidang.id')
+            ->join('jabatan', 'pengurus.id_jabatan', '=', 'jabatan.id')
+            ->select('pengurus.*', 'anggota.nama', 'bidang.bidang', 'jabatan.jabatan')
+            ->get();
+        return view('admin.pengurus.pengurus', compact('pengurus'));
     }
 
     public function carijabatan(Request $request)
     {
-        $bidang = Bidang::select('kode')->where('bidang', $request->kode)->first();
-        $jabatan = Jabatan::where('kode_bidang', $bidang->kode)->get();
+        // $bidang = Bidang::find($request->kode);
+        $jabatan = Jabatan::where('id_bidang', $request->kode)->get();
         foreach ($jabatan as $jbt) {
-            echo "<option value='$jbt->jabatan'>$jbt->jabatan</option>";
+            echo "<option value='$jbt->id'>$jbt->jabatan</option>";
         }
     }
 
@@ -52,7 +57,8 @@ class PengurusController extends Controller
 
     public function create()
     {
-        //
+        $bidang = Bidang::select('id', 'bidang')->get();
+        return view('admin.pengurus.tambah-pengurus', compact('bidang'));
     }
 
     /**
@@ -63,6 +69,21 @@ class PengurusController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nama' => 'required|string|max:100',
+                'nim' => 'required|string|min:9|max:9',
+                'periode' => 'required|string|max:4|min:4',
+                'foto' => 'required|file|image|mimes:jpg|max:2048',
+                'bidang' => 'required|string',
+                'jabatan' => 'required|string'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
         $filename = $request->nama . '.' . $request->foto->extension();
         $lokasi = public_path('assets/img/pengurus');
@@ -70,10 +91,9 @@ class PengurusController extends Controller
 
         $tambah = Pengurus::Create(
             [
-                'nama' => $request->nama,
                 'nim' => $request->nim,
-                'bidang' => $request->bidang,
-                'jabatan' => $request->jabatan,
+                'id_bidang' => $request->bidang,
+                'id_jabatan' => $request->jabatan,
                 'periode' => $request->periode,
                 'foto' => $filename
             ]
@@ -91,9 +111,10 @@ class PengurusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $bidang = Bidang::select('bidang')->get();
+        return view('users.pengurus', compact('bidang'));
     }
 
     /**
@@ -104,7 +125,16 @@ class PengurusController extends Controller
      */
     public function edit($id)
     {
-        //
+        $bidang = Bidang::select('id', 'bidang')->get();
+        $pengurus = DB::table('pengurus')
+            ->join('anggota', 'pengurus.nim', '=', 'anggota.nim')
+            ->join('bidang', 'pengurus.id_bidang', '=', 'bidang.id')
+            ->join('jabatan', 'pengurus.id_jabatan', '=', 'jabatan.id')
+            ->select('pengurus.*', 'anggota.nama', 'bidang.bidang', 'jabatan.jabatan')
+            ->where('pengurus.id', $id)
+            ->first();
+        $jabatan = Jabatan::where('id_bidang', $pengurus->id_bidang)->get();
+        return view('admin.pengurus.edit-pengurus', compact('pengurus', 'bidang', 'jabatan'));
     }
 
     /**
@@ -116,6 +146,22 @@ class PengurusController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nama' => 'required|string|max:100',
+                'nim' => 'required|string|min:9|max:9',
+                'periode' => 'required|string|max:4|min:4',
+                'foto' => 'file|image|mimes:jpg|max:2048',
+                'bidang' => 'required|string',
+                'jabatan' => 'required|string'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
         $update = Pengurus::find($id);
         if ($request->hasFile('foto')) {
             $filename = $request->nama . '.' . $request->foto->extension();
@@ -125,10 +171,9 @@ class PengurusController extends Controller
 
             $update->update(
                 [
-                    'nama' => $request->nama,
                     'nim' => $request->nim,
-                    'bidang' => $request->bidang,
-                    'jabatan' => $request->jabatan,
+                    'id_bidang' => $request->bidang,
+                    'id_jabatan' => $request->jabatan,
                     'periode' => $request->periode,
                     'foto' => $filename
                 ]
@@ -136,17 +181,16 @@ class PengurusController extends Controller
         } else {
             $update->update(
                 [
-                    'nama' => $request->nama,
                     'nim' => $request->nim,
-                    'bidang' => $request->bidang,
-                    'jabatan' => $request->jabatan,
+                    'id_bidang' => $request->bidang,
+                    'id_jabatan' => $request->jabatan,
                     'periode' => $request->periode
                 ]
             );
         }
 
         if ($update) {
-            return redirect()->back()->with('success', 'Data Berhasil diupdate');
+            return redirect(route('pengurus'))->with('success', 'Data Berhasil diupdate');
         } else {
             return redirect()->back()->with('error', 'Data Gagal diupdate');
         }

@@ -18,15 +18,17 @@ use App\Http\Controllers\pengurusController;
 */
 
 Route::get('/', function () {
-    return view('users/index');
+    return view('users.index');
 });
+Route::get('/berita/{id}', [BeritaController::class, 'show'])->name('tampil-berita');
+Route::get('/pengurus', [PengurusController::class, 'show'])->name('tampil-Pengurus');
 
 
 Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     Route::group(['prefix' => 'admin/'], function () {
 
-        Route::get('/dashboard', function () {
-            return view('admin/dashboard');
+        Route::get('dashboard', function () {
+            return view('admin.dashboard');
         });
 
         Route::get('/anggota', [AnggotaController::class, 'index'])->name('anggota');
@@ -40,9 +42,11 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::get('/inventaris/hapusinventaris/{id}', [InventarisController::class, 'destroy'])->name('hapusinventaris');
 
         Route::get('/pengurus', [PengurusController::class, 'index'])->name('pengurus');
-        Route::post('/pengurus/kirimpengurus', [PengurusController::class, 'store'])->name('kirimpengurus');
-        Route::post('/pengurus/updatepengurus/{id}', [PengurusController::class, 'update'])->name('updatepengurus');
-        Route::get('/pengurus/hapuspengurus/{id}', [PengurusController::class, 'destroy'])->name('hapuspengurus');
+        Route::get('/pengurus/tambahpengurus', [PengurusController::class, 'create'])->name('tambah-pengurus');
+        Route::post('/pengurus/kirimpengurus', [PengurusController::class, 'store'])->name('kirim-pengurus');
+        Route::get('/pengurus/editpengurus/{id}', [PengurusController::class, 'edit'])->name('edit-pengurus');
+        Route::post('/pengurus/updatepengurus/{id}', [PengurusController::class, 'update'])->name('update-pengurus');
+        Route::get('/pengurus/hapuspengurus/{id}', [PengurusController::class, 'destroy'])->name('hapus-pengurus');
         Route::post('/pengurus/carijabatan', [PengurusController::class, 'carijabatan'])->name('carijabatan');
         Route::post('/pengurus/carianggota', [PengurusController::class, 'carianggota'])->name('carianggota');
 

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Berita;
 use Illuminate\Support\Facades\File;
+use App\Models\Berita;
+use App\Models\Bidang;
 
 class BeritaController extends Controller
 {
@@ -26,7 +27,8 @@ class BeritaController extends Controller
      */
     public function create()
     {
-        return view('admin.berita.tambah-berita');
+        $bidang = Bidang::select('bidang')->where('bidang', '!=', 'Pengurus Inti')->groupby('bidang')->get();
+        return view('admin.berita.tambah-berita', compact('bidang'));
     }
 
     /**
@@ -64,7 +66,11 @@ class BeritaController extends Controller
      */
     public function show($id)
     {
-        //
+        $berita = Berita::where('judul', $id)->first();
+        $view = $berita->view + 1;
+        $berita->view = $view;
+        $berita->save();
+        return view('users.berita', compact('berita'));
     }
 
     /**
@@ -76,7 +82,8 @@ class BeritaController extends Controller
     public function edit($id)
     {
         $edit = Berita::findorfail($id);
-        return view('admin.berita.edit-berita', compact('edit'));
+        $bidang = Bidang::select('bidang')->where('bidang', '!=', 'Pengurus Inti')->groupby('bidang')->get();
+        return view('admin.berita.edit-berita', compact('edit', 'bidang'));
     }
 
     /**

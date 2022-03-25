@@ -19,6 +19,8 @@ class CreateBeritasTable extends Migration
             $table->text('deskripsi');
             $table->string('gambar');
             $table->string('penulis');
+            $table->string('bidang');
+            $table->integer('view');
             $table->timestamps();
         });
     }

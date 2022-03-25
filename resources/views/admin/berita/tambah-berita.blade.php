@@ -23,18 +23,26 @@
                 @csrf
                 <input type="hidden" name="penulis" id="penulis" value="{{ Auth::user()->name }}">
                 <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
                         <label for="judul">Judul</label>
                         <input type="text" class="form-control required" id="judul" name="judul" placeholder="Masukan Judul"
                             value="" minlength="2" required="">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 mb-md-0">
+                        <label for="bidang">Bidang</label>
+                        <select name="bidang" id="bidang" class="form-control required">
+                            @foreach ($bidang as $bd)
+                                <option value="{{ $bd->bidang }}">{{ $bd->bidang }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6 mb-md-0">
                         <label for="gambar">Gambar</label>
                         <input type="file" class="form-control required" id="gambar" name="gambar"
                             placeholder="Masukan gambar" value="" required="">
                         <small class="text-muted">Ukuran: 850x350 | Format: jpg</small>
                     </div>
-                    <div class="form-group col-sm-12">
+                    <div class="form-group col-sm-12 ">
                         <label for="deskripsi">Deskripsi</label>
                         <textarea name="deskripsi" id="deskripsi" class="form-control"></textarea>
                     </div>

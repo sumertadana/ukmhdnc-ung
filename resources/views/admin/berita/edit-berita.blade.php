@@ -24,10 +24,19 @@
                 @csrf
                 <input type="hidden" name="penulis" id="penulis" value="{{ $edit->penulis }}">
                 <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
                         <label for="judul">Judul</label>
                         <input type="text" class="form-control required" id="judul" name="judul" placeholder="Masukan Judul"
                             value="{{ $edit->judul }}" minlength="2" required="">
+                    </div>
+                    <div class="form-group col-md-6 mb-md-0">
+                        <label for="bidang">Bidang</label>
+                        <select name="bidang" id="bidang" class="form-control required">
+                            <option selected value="{{ $edit->bidang }}" hidden>{{ $edit->bidang }}</option>
+                            @foreach ($bidang as $bd)
+                                <option value="{{ $bd->bidang }}">{{ $bd->bidang }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="gambar">Gambar</label>

@@ -30,6 +30,8 @@
                             <th>No</th>
                             <th>Judul</th>
                             <th>Penulis</th>
+                            <th>View</th>
+                            <th>Bidang</th>
                             <th>Gambar</th>
                             <th>Aksi</th>
                         </tr>
@@ -40,7 +42,9 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $brt->judul }}</td>
                                 <td>{{ $brt->penulis }}</td>
-                                <td><img src="{{ asset('assets/img/berita/' . $brt->gambar) }}" alt="" height="100"></td>
+                                <td>{{ $brt->view }}</td>
+                                <td>{{ $brt->bidang }}</td>
+                                <td><img src="{{ asset('assets/img/berita/' . $brt->gambar) }}" alt="" height="75"></td>
                                 <td>
                                     <a href="{{ route('edit-berita', $brt->id) }}" class="btn btn-primary shadow"><i
                                             class="fa fa-edit"></i></a>
