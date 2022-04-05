@@ -3,40 +3,58 @@
 @section('konten')
     @php
     use App\Models\Berita;
-    $berita = Berita::all();
+    use App\Models\Bidang;
+    $berita = Berita::join('bidang', 'berita.id_bidang', '=', 'bidang.id')
+        ->select('berita.*', 'bidang.bidang')
+        ->orderByDesc('berita.created_at')
+        ->paginate(4);
     @endphp
-    @foreach ($berita as $brt)
-        <div class="card mb-4">
-            <a href="{{ route('tampil-berita', $brt->judul) }}"><img class="card-img-top img-fluid"
-                    src="{{ asset('assets/img/berita/' . $brt->gambar) }}" alt="{{ $brt->gambar }}" /></a>
-            <div class="card-header bg-white">
-                <a href="{{ route('tampil-berita', $brt->judul) }}"
-                    class="card-title fw-bold mb-1 fs-2 text-decoration-none text-dark ">{{ $brt->judul }}</a>
-                <ul class="d-flex justify-content-start list-unstyled mb-0">
-                    <li class="text-muted"><i class="fa fa-user mr-1"></i> {{ $brt->penulis }}</a></li>
-                    <li class="mx-2 text-muted">|</li>
-                    <li class="text-muted"><i class="fa fa-calendar-alt"></i>
-                        {{ date('d F Y', strtotime($brt->created_at)) }}</a></li>
-                </ul>
-            </div>
 
-            <div class="card-body">
-                <p class="card-text text-justify">
-                    @php
-                        echo substr($brt->deskripsi, 0, 500) . '.....';
-                    @endphp
-                    <a href="{{ route('tampil-berita', $brt->judul) }}">selengkapnya</a>
-
-                </p>
-                {{-- <a class="btn btn-primary" href="#!">Read more →</a> --}}
-            </div>
-            <div class="card-footer bg-white">
-                <ul class="d-flex justify-content-start list-unstyled text-muted my-2">
-                    <li class=""><i class="fa fa-eye mr-1"></i> 12 Dilihat</a></li>
-                    <li class="mx-2">|</li>
-                    <li class=""><i class="fa fa-comments"></i> 15 Komentar</a></li>
-                </ul>
-            </div>
+    <!-- Blog entries-->
+    <div class="col-md-9">
+        <h2 class="text-start fw-bold h5 mb-4">Program Kerja Terlaksana <i class="fab fa-chromecast"></i></h2>
+        <div class="card mb-3 border-0 bg-light">
+            @foreach ($berita as $brt)
+                <div class="row g-0 mb-4">
+                    <div class="col-md-4">
+                        <img src="{{ asset('assets/img/berita/' . $brt->gambar) }}"
+                            class="img-fluid rounded-start mt-0 border-1" alt="{{ $brt->judul }}">
+                    </div>
+                    <div class="col-md-8 ">
+                        <div class="card-body pt-md-0 ps-md-3 px-0">
+                            <a class="card-title fw-bold h4 mb-1 text-dark text-decoration-none text-uppercase" strong
+                                href="{{ route('tampil-berita', $brt->judul) }}">{{ $brt->judul }}</a>
+                            <p class="card-text text-justify mb-1 text-secondary">
+                                @php
+                                    echo substr($brt->deskripsi, 0, 250) . '...';
+                                @endphp
+                                <a class="mb-0"
+                                    href="{{ route('tampil-berita', $brt->judul) }}">selengkapnya</a>
+                            </p>
+                            <p class="card-text mt-0">
+                                <a class="badge bg-warning text-decoration-none link-light me-2"
+                                    href="#!">{{ $brt->bidang }}</a>
+                                <small class="text-muted me-2"><i class="fa fa-calendar-alt"></i>
+                                    {{ date('d F Y', strtotime($brt->created_at)) }}
+                                </small>
+                                <small class="text-muted me-2"><i class="fas fa-user"></i> {{ $brt->penulis }}</small>
+                                <small class="text-muted"><i class="fa fa-eye mr-1"></i> {{ $brt->view }}</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
-    @endforeach
+    </div>
+    <!-- Side widgets-->
+    <div class="col-md-3">
+        <!-- Search widget-->
+        {{-- @include('layouts.users.pencarian') --}}
+        <!-- pengurus widget-->
+        @include('layouts.users.pengurus')
+        <!-- Categories Bidang widget-->
+        @include('layouts.users.bidang')
+        <!-- Galeri widget-->
+        @include('layouts.users.galeri')
+    </div>
 @endsection

@@ -13,20 +13,21 @@ class Anggota extends Migration
      */
     public function up()
     {
-        Schema::create('anggota', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->string('nim')->unique();
-            $table->string('alamat');
-            $table->string('jk');
-            $table->string('fakultas');
-            $table->string('jurusan');
-            $table->string('angkatan');
-            $table->string('status');
-            $table->rememberToken();
-            $table->string('foto', 2048)->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('anggota', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('nama');
+        //     $table->string('nim')->unique();
+        //     $table->string('alamat');
+        //     $table->string('hp');
+        //     $table->string('jk');
+        //     $table->string('fakultas');
+        //     $table->string('jurusan');
+        //     $table->string('angkatan');
+        //     $table->string('status')->nullable();
+        //     $table->rememberToken();
+        //     $table->string('foto', 2048)->nullable();
+        //     $table->timestamps();
+        // });
     }
 
     /**

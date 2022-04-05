@@ -9,8 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="{{ asset('assets/img/logo/ukm-logo.ico') }}" type="image/x-icon">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>UKM-HDNC UNG</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -32,62 +33,69 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('dashboard') }}">
+                <div class="sidebar-brand-icon">
+                    <img src="{{ asset('assets/img/logo/ukm-logo.ico') }}" width="50px" height="50px" alt="">
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-            </a>
 
+                <div class="sidebar-brand-text mx-2">UKM HDNC
+                </div>
+            </a>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ url('admin/dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider my-0 py-0">
-
+            <!-- Anggota -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('anggota') }}">
                     <i class="fas fa-users"></i>
                     <span>Anggota</span></a>
             </li>
-
             <hr class="sidebar-divider my-0 py-0">
-
+            <!-- Pengurus -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('pengurus') }}">
                     <i class="fas fa-user-friends"></i>
                     <span>Pengurus</span></a>
             </li>
-
             <hr class="sidebar-divider my-0 py-0">
-
+            <!-- inventaris -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('inventaris') }}">
                     <i class="fas fa-fw fa-boxes"></i>
                     <span>Inventaris</span></a>
             </li>
-
             <hr class="sidebar-divider my-0 py-0">
-
+            <!-- berita -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('berita') }}">
                     <i class="fas fa-fw fa-newspaper"></i>
                     <span>Berita</span></a>
             </li>
-
+            <hr class="sidebar-divider my-0 py-0">
+            <!-- slider -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('slider') }}">
+                    <i class="fas fa-images"></i>
+                    <span>Slider</span></a>
+            </li>
+            <hr class="sidebar-divider my-0 py-0">
+            <!-- galeri -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('galeri') }}">
+                    <i class="fas fa-camera"></i>
+                    <span>Galeri</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -111,9 +119,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                {{-- <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg"> --}}
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                                <i class="fas fa-user-tie"></i>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -157,7 +165,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; UKM-HDNC UNG 2022</span>
                     </div>
                 </div>
             </footer>

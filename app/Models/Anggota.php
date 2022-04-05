@@ -13,10 +13,11 @@ class Anggota extends Model
         'nim',
         'alamat',
         'jk',
-        'fakultas',
-        'jurusan',
+        'hp',
+        'id_fakultas',
+        'id_jurusan',
         'angkatan',
         'status',
-        'email',
+        'foto',
     ];
 }

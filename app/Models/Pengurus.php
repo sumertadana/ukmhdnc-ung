@@ -12,8 +12,8 @@ class Pengurus extends Model
     protected $fillable = [
         'nama',
         'nim',
-        'bidang',
-        'jabatan',
+        'id_bidang',
+        'id_jabatan',
         'periode',
         'foto',
     ];

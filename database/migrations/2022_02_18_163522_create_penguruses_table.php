@@ -13,16 +13,18 @@ class CreatePengurusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pengurus', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->string('nim');
-            $table->string('bidang');
-            $table->string('jabatan');
-            $table->string('periode');
-            $table->string('foto', 2048)->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('pengurus', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->unsignedInteger('nim');
+        //     $table->unsignedBigInteger('id_bidang');
+        //     $table->unsignedBigInteger('id_jabatan');
+        //     $table->string('periode');
+        //     $table->timestamps();
+
+        //     $table->foreign('nim')->references('nim')->on('anggota')->onUpdate()->onDelete();
+        //     $table->foreign('id_bidang')->references('id')->on('bidang')->onUpdate()->onDelete();
+        //     $table->foreign('id_jabatan')->references('id')->on('jabatan')->onUpdate()->onDelete();
+        // });
     }
 
     /**

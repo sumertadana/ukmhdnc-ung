@@ -16,7 +16,10 @@ class BeritaController extends Controller
      */
     public function index()
     {
-        $berita = Berita::all();
+        $berita = Berita::join('bidang', 'berita.id_bidang', '=', 'bidang.id')
+            ->select('berita.*', 'bidang.bidang')
+            ->orderByDesc('berita.created_at')
+            ->get();
         return view('admin/berita/berita', compact('berita'));
     }
 
@@ -27,7 +30,7 @@ class BeritaController extends Controller
      */
     public function create()
     {
-        $bidang = Bidang::select('bidang')->where('bidang', '!=', 'Pengurus Inti')->groupby('bidang')->get();
+        $bidang = Bidang::select('id', 'bidang')->where('bidang', '!=', 'Pengurus Inti')->get();
         return view('admin.berita.tambah-berita', compact('bidang'));
     }
 
@@ -39,6 +42,7 @@ class BeritaController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $filename = $request->judul . '.' . $request->gambar->extension();
         $lokasi = public_path('assets/img/berita');
         $request->file('gambar')->move($lokasi, $filename);
@@ -48,6 +52,8 @@ class BeritaController extends Controller
                 'judul' => $request->judul,
                 'deskripsi' => $request->deskripsi,
                 'gambar' => $filename,
+                'id_bidang' => $request->id_bidang,
+                'view' => 0,
                 'penulis' => $request->penulis
             ]
         );
@@ -66,7 +72,11 @@ class BeritaController extends Controller
      */
     public function show($id)
     {
-        $berita = Berita::where('judul', $id)->first();
+        // $berita = Berita::where('judul', $id)->first();
+        $berita = Berita::join('bidang', 'berita.id_bidang', '=', 'bidang.id')
+            ->select('berita.*', 'bidang.bidang')
+            ->where('berita.judul', '=', $id)
+            ->first();
         $view = $berita->view + 1;
         $berita->view = $view;
         $berita->save();
@@ -81,8 +91,12 @@ class BeritaController extends Controller
      */
     public function edit($id)
     {
-        $edit = Berita::findorfail($id);
-        $bidang = Bidang::select('bidang')->where('bidang', '!=', 'Pengurus Inti')->groupby('bidang')->get();
+        // $edit = Berita::findorfail($id);
+        $edit = Berita::join('bidang', 'berita.id_bidang', '=', 'bidang.id')
+            ->select('berita.*', 'bidang.bidang')
+            ->where('berita.id', '=', $id)
+            ->first();
+        $bidang = Bidang::select('id', 'bidang')->where('bidang', '!=', 'Pengurus Inti')->get();
         return view('admin.berita.edit-berita', compact('edit', 'bidang'));
     }
 
@@ -106,6 +120,7 @@ class BeritaController extends Controller
                 [
                     'judul' => $request->judul,
                     'deskripsi' => $request->deskripsi,
+                    'id_bidang' => $request->id_bidang,
                     'gambar' => $filename,
                     'penulis' => $request->penulis
                 ]
@@ -115,6 +130,7 @@ class BeritaController extends Controller
                 [
                     'judul' => $request->judul,
                     'deskripsi' => $request->deskripsi,
+                    'id_bidang' => $request->id_bidang,
                     'penulis' => $request->penulis
                 ]
             );
@@ -141,5 +157,11 @@ class BeritaController extends Controller
         $delete->delete();
 
         return redirect()->back()->with('success', 'Berita Berhasil dihapus');
+    }
+
+    public function galeri()
+    {
+        $galeri = Berita::all();
+        return view('users.galeri', compact('galeri'));
     }
 }

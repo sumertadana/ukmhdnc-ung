@@ -13,16 +13,16 @@ class CreateBeritasTable extends Migration
      */
     public function up()
     {
-        Schema::create('berita', function (Blueprint $table) {
-            $table->id();
-            $table->string('judul');
-            $table->text('deskripsi');
-            $table->string('gambar');
-            $table->string('penulis');
-            $table->string('bidang');
-            $table->integer('view');
-            $table->timestamps();
-        });
+        // Schema::create('berita', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('judul');
+        //     $table->text('deskripsi');
+        //     $table->string('gambar');
+        //     $table->string('penulis');
+        //     $table->string('bidang');
+        //     $table->integer('view');
+        //     $table->timestamps();
+        // });
     }
 
     /**

@@ -13,12 +13,11 @@ class CreateBidangsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bidang', function (Blueprint $table) {
-            $table->id();
-            $table->string('bidang');
-            $table->string('kode');
-            $table->timestamps();
-        });
+        // Schema::create('bidang', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('bidang');
+        //     $table->timestamps();
+        // });
     }
 
     /**

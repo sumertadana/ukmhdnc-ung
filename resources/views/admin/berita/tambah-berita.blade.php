@@ -29,10 +29,10 @@
                             value="" minlength="2" required="">
                     </div>
                     <div class="form-group col-md-6 mb-md-0">
-                        <label for="bidang">Bidang</label>
-                        <select name="bidang" id="bidang" class="form-control required">
+                        <label for="id_bidang">Bidang</label>
+                        <select name="id_bidang" id="id_bidang" class="form-control required">
                             @foreach ($bidang as $bd)
-                                <option value="{{ $bd->bidang }}">{{ $bd->bidang }}</option>
+                                <option value="{{ $bd->id }}">{{ $bd->bidang }}</option>
                             @endforeach
                         </select>
                     </div>

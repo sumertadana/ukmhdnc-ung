@@ -3,7 +3,7 @@
 
 body {
     background-color: #eaeaea;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif !important;
 }
 
 .bgjumbotron {
@@ -17,4 +17,11 @@ body {
 .gambar {
     max-height: 500px;
     position: relative;
+}
+
+.isi {
+    margin: 0;
+    text-indent: 2rem;
+    text-align: justify;
+    text-justify: inter-word;
 }

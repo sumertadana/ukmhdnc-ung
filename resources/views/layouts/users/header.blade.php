@@ -1,7 +1,12 @@
 <header class=" bg-white mb-md-3 ">
-    <div class="owl-carousel" id="slider-carousel">
-        <div> <img class="img-fluid item" src="{{ asset('assets/img/slider/20221.png') }}" alt=""> </div>
-        <div> <img class="img-fluid item" src="{{ asset('assets/img/slider/20221.png') }}" alt=""> </div>
-        <div> <img class="img-fluid item" src="{{ asset('assets/img/slider/20221.png') }}" alt=""> </div>
+    @php
+        use App\Models\Slider;
+        $slider = Slider::all();
+    @endphp
+    <div class="owl-carousel mt-2 container-fluid" id="slider-carousel">
+        @foreach ($slider as $sld)
+            <div> <img class="item shadow" src="{{ asset('assets/img/slider/' . $sld->gambar) }}"
+                    alt="{{ $sld->judul }}"> </div>
+        @endforeach
     </div>
 </header>

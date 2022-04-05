@@ -15,7 +15,7 @@ class InventarisController extends Controller
     public function index()
     {
         $inventaris = Inventaris::all();
-        return view('admin.inventaris', compact('inventaris'));
+        return view('admin.inventaris.inventaris', compact('inventaris'));
     }
 
     /**

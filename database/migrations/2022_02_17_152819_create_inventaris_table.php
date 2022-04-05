@@ -13,14 +13,14 @@ class CreateInventarisTable extends Migration
      */
     public function up()
     {
-        Schema::create('inventaris', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->string('kode')->unique();
-            $table->integer('jumlah');
-            $table->string('kondisi');
-            $table->timestamps();
-        });
+        // Schema::create('inventaris', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('nama');
+        //     $table->string('kode')->unique();
+        //     $table->integer('jumlah');
+        //     $table->string('kondisi');
+        //     $table->timestamps();
+        // });
     }
 
     /**

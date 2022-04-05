@@ -16,8 +16,14 @@ class CreateJabatansTable extends Migration
         // Schema::create('jabatan', function (Blueprint $table) {
         //     $table->id();
         //     $table->string('jabatan');
-        //     $table->integer('kode_bidang');
+        //     $table->unsignedBigInteger('id_bidang');
         //     $table->timestamps();
+
+        //     $table->foreign('id_bidang')
+        //         ->references('id')
+        //         ->on('bidang')
+        //         ->onUpdate()
+        //         ->onDelete();
         // });
     }
 

@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Anggota;
 use DataTables;
+use App\Models\Fakultas;
+use App\Models\Jurusan;
+use App\Models\Pengurus;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 class AnggotaController extends Controller
 {
@@ -15,8 +20,20 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-        $anggota = Anggota::all();
-        return view('admin.anggota', compact('anggota'));
+        $anggota = Anggota::join('fakultas', 'anggota.id_fakultas', '=', 'fakultas.id')
+            ->join('jurusan', 'anggota.id_jurusan', '=', 'jurusan.id')
+            ->select('anggota.*', 'fakultas.fakultas', 'jurusan.jurusan')
+            ->get();
+        $fakultas = Fakultas::select('id', 'fakultas')->get();
+        return view('admin.anggota.anggota', compact('anggota', 'fakultas'));
+    }
+
+    public function carijurusan(Request $request)
+    {
+        $jurusan = Jurusan::where('id_fakultas', $request->kode)->get();
+        foreach ($jurusan as $jrs) {
+            echo "<option value='$jrs->id'>$jrs->jurusan</option>";
+        }
     }
 
     /**
@@ -26,7 +43,8 @@ class AnggotaController extends Controller
      */
     public function create()
     {
-        //
+        $fakultas = Fakultas::select('id', 'fakultas')->get();
+        return view('admin.anggota.tambah-anggota', compact('fakultas'));
     }
 
     /**
@@ -37,23 +55,65 @@ class AnggotaController extends Controller
      */
     public function store(Request $request)
     {
-
-        $tambah = Anggota::Create(
+        // dd($request);
+        $validator = Validator::make(
+            $request->all(),
             [
-                'nama' => $request->nama,
-                'nim' => $request->nim,
-                'angkatan' => $request->angkatan,
-                'jk' => $request->jk,
-                'fakultas' => $request->fakultas,
-                'jurusan' => $request->jurusan,
-                'alamat' => $request->alamat,
-                'status' => $request->status
+                'nama' => 'required|string|max:100',
+                'nim' => 'required|string|min:9|max:9|unique:anggota',
+                'fakultas' => 'required|string',
+                'jurusan' => 'required|string',
+                'angkatan' => 'required|string|min:4|max:4',
+                'hp' => 'max:14',
+                'foto' => 'file|image|mimes:jpg|max:2048',
+                'alamat' => 'required|string',
+                'status' => 'required|string'
             ]
         );
-        if ($tambah) {
-            return redirect()->back()->with('success', 'Data Berhasil diTambahkan');
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        if ($request->hasFile('foto')) {
+            $filename = $request->nama . '-' . $request->nim . '.' . $request->foto->extension();
+            $lokasi = public_path('assets/img/anggota');
+            $request->file('foto')->move($lokasi, $filename);
+
+            $tambah = Anggota::Create(
+                [
+                    'nama' => $request->nama,
+                    'nim' => $request->nim,
+                    'id_fakultas' => $request->fakultas,
+                    'id_jurusan' => $request->jurusan,
+                    'angkatan' => $request->angkatan,
+                    'hp' => $request->hp,
+                    'jk' => $request->jk,
+                    'alamat' => $request->alamat,
+                    'status' => $request->status,
+                    'foto' => $filename
+                ]
+            );
         } else {
-            return redirect()->back()->with('error', 'Data Gagal diTambahkan');
+            $tambah = Anggota::Create(
+                [
+                    'nama' => $request->nama,
+                    'nim' => $request->nim,
+                    'id_fakultas' => $request->fakultas,
+                    'id_jurusan' => $request->jurusan,
+                    'angkatan' => $request->angkatan,
+                    'hp' => $request->hp,
+                    'jk' => $request->jk,
+                    'alamat' => $request->alamat,
+                    'status' => $request->status
+                ]
+            );
+        };
+
+        if ($tambah) {
+            return redirect()->back()->with('success', 'Data Berhasil ditambahkan');
+        } else {
+            return redirect()->back()->with('error', 'Data Gagal ditambahkan');
         }
     }
 
@@ -76,7 +136,13 @@ class AnggotaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $anggota = Anggota::join('fakultas', 'anggota.id_fakultas', '=', 'fakultas.id')
+            ->join('jurusan', 'anggota.id_jurusan', '=', 'jurusan.id')
+            ->select('anggota.*', 'fakultas.fakultas', 'jurusan.jurusan')
+            ->where('anggota.id', '=', $id)
+            ->first();
+        $fakultas = Fakultas::select('id', 'fakultas')->get();
+        return view('admin.anggota.edit-anggota', compact('fakultas', 'anggota'));
     }
 
     /**
@@ -88,22 +154,63 @@ class AnggotaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $update = Anggota::find($id);
-        $update->update([
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nama' => 'required|string|max:100',
+                'nim' => 'required|string|min:9|max:9',
+                'fakultas' => 'required|string',
+                'jurusan' => 'required|string',
+                'angkatan' => 'required|string|min:4|max:4',
+                'hp' => 'max:14',
+                'foto' => 'file|image|mimes:jpg|max:2048',
+                'alamat' => 'required|string',
+                'status' => 'required|string'
+            ]
+        );
 
-            'nama' => $request->nama,
-            'nim' => $request->nim,
-            'angkatan' => $request->angkatan,
-            'jk' => $request->jk,
-            'fakultas' => $request->fakultas,
-            'jurusan' => $request->jurusan,
-            'alamat' => $request->alamat,
-            'status' => $request->status
-        ]);
-        if ($update) {
-            return redirect()->back()->with('success', 'Data Berhasil diUpdate');
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        $update = Anggota::find($id);
+        if ($request->hasFile('foto')) {
+            $filename = $request->nama . '-' . $request->nim . '.' . $request->foto->extension();
+            $lokasi = public_path('assets/img/anggota');
+            $request->file('foto')->move($lokasi, $filename);
+
+            $update->Update(
+                [
+                    'nama' => $request->nama,
+                    'nim' => $request->nim,
+                    'id_fakultas' => $request->fakultas,
+                    'id_jurusan' => $request->jurusan,
+                    'angkatan' => $request->angkatan,
+                    'hp' => $request->hp,
+                    'jk' => $request->jk,
+                    'alamat' => $request->alamat,
+                    'status' => $request->status,
+                    'foto' => $filename
+                ]
+            );
         } else {
-            return redirect()->back()->with('error', 'Data Gagal diUpdate');
+            $update->Update(
+                [
+                    'nama' => $request->nama,
+                    'nim' => $request->nim,
+                    'id_fakultas' => $request->fakultas,
+                    'id_jurusan' => $request->jurusan,
+                    'angkatan' => $request->angkatan,
+                    'hp' => $request->hp,
+                    'jk' => $request->jk,
+                    'alamat' => $request->alamat,
+                    'status' => $request->status
+                ]
+            );
+        };
+        if ($update) {
+            return redirect(route('anggota'))->with('success', 'Data Berhasil diupdate');
+        } else {
+            return redirect()->back()->with('error', 'Data Gagal diupdate');
         }
     }
 
@@ -115,7 +222,13 @@ class AnggotaController extends Controller
      */
     public function destroy($id)
     {
-        Anggota::find($id)->delete();
+        $hapus = Anggota::find($id);
+        $pengurus = Pengurus::where('nim', $hapus->nim)->first();
+        if (isset($pengurus)) {
+            $pengurus->delete();
+        };
+        $hapus->delete();
+        File::delete('assets/img/anggota' . $hapus->foto);
         return redirect()->back()->with('success', 'Data Berhasil dihapus');
     }
 }
