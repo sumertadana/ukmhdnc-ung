@@ -164,4 +164,23 @@ class BeritaController extends Controller
         $galeri = Berita::all();
         return view('users.galeri', compact('galeri'));
     }
+
+    public function cariartikel(Request $request)
+    {
+        $cari = $request->cari;
+        $berita = Berita::join('bidang', 'berita.id_bidang', '=', 'bidang.id')
+            ->select('berita.*', 'bidang.bidang')
+            ->where('berita.judul', 'like', '%' . $cari . '%')
+            // ->orderByDesc('berita.created_at')
+            ->paginate(4);
+        $j = count($berita);
+        // dd($j);
+        if (count($berita) > 0) {
+            $x = 1;
+            return view('users.index', compact('berita', 'cari', 'x'));
+        } else {
+            $x = 2;
+            return view('users.index', compact('cari', 'x'));
+        };
+    }
 }

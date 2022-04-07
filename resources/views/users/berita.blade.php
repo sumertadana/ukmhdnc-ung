@@ -9,7 +9,8 @@
                 <!-- Post title-->
                 <h1 class="fw-bolder mb-1 ">{{ $berita->judul }}</h1>
                 <!-- Post meta content-->
-                <a class="badge bg-warning text-decoration-none link-light me-2" href="#!">{{ $berita->bidang }}</a>
+                <a class="badge bg-warning text-decoration-none link-light me-2"
+                    href="{{ route('caribidang', $berita->bidang) }}">{{ $berita->bidang }}</a>
                 <span class="text-muted fst-italic mb-2">Diposting pada {{ date('d F Y', strtotime($berita->created_at)) }}
                     oleh
                     {{ $berita->penulis }}
@@ -90,13 +91,6 @@
     </div>
     <!-- Side widgets-->
     <div class="col-md-3">
-        <!-- Search widget-->
-        {{-- @include('layouts.users.pencarian') --}}
-        <!-- pengurus widget-->
-        @include('layouts.users.pengurus')
-        <!-- Categories Bidang widget-->
-        @include('layouts.users.bidang')
-        <!-- Galeri widget-->
-        @include('layouts.users.galeri')
+        @include('layouts.users.sidebar')
     </div>
 @endsection

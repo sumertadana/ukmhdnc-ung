@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8" />
@@ -41,13 +41,15 @@
                     <li class="nav-item"><a class="nav-link text-white" href="{{ url('/') }}">Beranda</a></li>
                     <li class="nav-item"><a class="nav-link text-white"
                             href="{{ route('tampil-Pengurus') }}">Struktur</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="{{ route('galeri') }}">Galeri</a>
+                    <li class="nav-item"><a class="nav-link text-white"
+                            href="{{ route('tampil-galeri') }}">Galeri</a>
                     </li>
                     <li class="nav-item"><a class="nav-link text-white" href="{{ route('login') }}">Login</a>
                     </li>
                 </ul>
-                <form class="d-flex mb-2 mb-md-0">
-                    <input class="form-control me-2" type="search" placeholder="Cari Artikel" aria-label="Search">
+                <form class="d-flex mb-2 mb-md-0" action="{{ route('cari-artikel') }}">
+                    <input class="form-control me-2" type="search" name="cari" placeholder="Cari Artikel"
+                        aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Cari</button>
                 </form>
             </div>

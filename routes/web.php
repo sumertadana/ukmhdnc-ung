@@ -7,6 +7,7 @@ use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\pengurusController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\PagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,13 +20,16 @@ use App\Http\Controllers\GaleriController;
 |
 */
 
-Route::get('/', function () {
-    return view('users.index');
-});
+// Route::get('/', function () {
+//     return view('users.index');
+// });
+Route::get('/', [PagesController::class, 'index'])->name('beranda');
 Route::get('/berita/{id}', [BeritaController::class, 'show'])->name('tampil-berita');
 Route::get('/pengurus', [PengurusController::class, 'show'])->name('tampil-Pengurus');
 // Route::get('/galeri', [BeritaController::class, 'galeri'])->name('galeri');
-route::get('/galeri', [GaleriController::class, 'show'])->name('galeri');
+route::get('/galeri', [GaleriController::class, 'show'])->name('tampil-galeri');
+Route::get('/cari', [BeritaController::class, 'cariartikel'])->name('cari-artikel');
+Route::get('/bidang={id}', [PagesController::class, 'caribidang'])->name('caribidang');
 
 
 Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {

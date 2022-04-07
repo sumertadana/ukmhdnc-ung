@@ -7,7 +7,8 @@ $bidang = Bidang::where('bidang', '!=', 'Pengurus Inti')->get();
     <div class="card-body">
         <ul class="list-unstyled mb-0 row">
             @foreach ($bidang as $bdg)
-                <li class="col-md-12 col-sm-6"><a href="#" class="text-decoration-none">{{ $bdg->bidang }}</a></li>
+                <li class="col-md-12 col-sm-6"><a href="{{ route('caribidang', $bdg->bidang) }}"
+                        class="text-decoration-none">{{ $bdg->bidang }}</a></li>
             @endforeach
         </ul>
     </div>

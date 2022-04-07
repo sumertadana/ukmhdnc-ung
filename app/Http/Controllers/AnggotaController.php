@@ -23,7 +23,7 @@ class AnggotaController extends Controller
         $anggota = Anggota::join('fakultas', 'anggota.id_fakultas', '=', 'fakultas.id')
             ->join('jurusan', 'anggota.id_jurusan', '=', 'jurusan.id')
             ->select('anggota.*', 'fakultas.fakultas', 'jurusan.jurusan')
-            ->get();
+            ->orderByDesc('angkatan')->get();
         $fakultas = Fakultas::select('id', 'fakultas')->get();
         return view('admin.anggota.anggota', compact('anggota', 'fakultas'));
     }
