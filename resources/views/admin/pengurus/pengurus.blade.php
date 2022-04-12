@@ -29,26 +29,27 @@
                 <table class="table dataTable table-bordered" id="myTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Nama</th>
+                            <th>Foto</th>
                             <th>NIM</th>
+                            <th>Nama</th>
                             <th>Bidang</th>
                             <th>Jabatan</th>
                             <th>Periode</th>
-                            <th>Foto</th>
+
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($pengurus as $pgr)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $pgr->nama }}</td>
+                                <td class="pt-1"><img src="{{ asset('assets/img/anggota/' . $pgr->foto) }}"
+                                        alt="" width="75px"></td>
                                 <td>{{ $pgr->nim }}</td>
+                                <td>{{ $pgr->nama }}</td>
                                 <td>{{ $pgr->bidang }}</td>
                                 <td>{{ $pgr->jabatan }}</td>
                                 <td>{{ $pgr->periode }}</td>
-                                <td><img src="{{ asset('assets/img/anggota/' . $pgr->foto) }}" alt="" width="50"></td>
+
                                 <td>
                                     <a href="{{ route('edit-pengurus', $pgr->id) }}" class="btn btn-primary shadow"><i
                                             class="fa fa-edit"></i></a>

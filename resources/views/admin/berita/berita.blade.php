@@ -31,6 +31,7 @@
                             <th>Judul</th>
                             <th>Penulis</th>
                             <th>View</th>
+                            <th>Komentar</th>
                             <th>Bidang</th>
                             <th>Gambar</th>
                             <th>Aksi</th>
@@ -43,6 +44,7 @@
                                 <td>{{ $brt->judul }}</td>
                                 <td>{{ $brt->penulis }}</td>
                                 <td>{{ $brt->view }}</td>
+                                <td>{{ $brt->komentar }}</td>
                                 <td>{{ $brt->bidang }}</td>
                                 <td><img src="{{ asset('assets/img/berita/' . $brt->gambar) }}" alt="" height="75"></td>
                                 <td>

@@ -1,3 +1,7 @@
+@php
+use App\Models\Komentar;
+use App\Models\Komentar2;
+@endphp
 <div class="card mb-3 border-0 bg-light">
     @foreach ($berita as $brt)
         <div class="row g-0 mb-4">
@@ -21,7 +25,12 @@
                         <small class="text-muted me-2"><i class="fa fa-calendar-alt"></i>
                             {{ date('d F Y', strtotime($brt->created_at)) }}
                         </small>
-                        <small class="text-muted me-2"><i class="fas fa-user"></i> {{ $brt->penulis }}</small>
+                        @php
+                            $jumlahkomen1 = Komentar::where('id_berita', $brt->id)->get();
+                            $jumlahkomen2 = Komentar2::where('id_berita', $brt->id)->get();
+                            $jumlah = count($jumlahkomen1) + count($jumlahkomen2);
+                        @endphp
+                        <small class="text-muted me-2"><i class="fas fa-comments"></i> {{ $jumlah }}</small>
                         <small class="text-muted"><i class="fa fa-eye mr-1"></i> {{ $brt->view }}</small>
                     </p>
                 </div>

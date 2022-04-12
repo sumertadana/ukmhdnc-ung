@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Berita;
 use App\Models\Bidang;
+use App\Models\Komentar;
+use App\Models\Komentar2;
 
 class PagesController extends Controller
 {
@@ -13,7 +15,7 @@ class PagesController extends Controller
         $berita = Berita::join('bidang', 'berita.id_bidang', '=', 'bidang.id')
             ->select('berita.*', 'bidang.bidang')
             ->orderByDesc('berita.created_at')
-            ->paginate(4);
+            ->get();
         $x = 0;
 
         return view('users.index', compact('berita', 'x'));

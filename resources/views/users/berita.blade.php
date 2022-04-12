@@ -9,14 +9,14 @@
                 <!-- Post title-->
                 <h1 class="fw-bolder mb-1 ">{{ $berita->judul }}</h1>
                 <!-- Post meta content-->
-                <a class="badge bg-warning text-decoration-none link-light me-2"
-                    href="{{ route('caribidang', $berita->bidang) }}">{{ $berita->bidang }}</a>
+
                 <span class="text-muted fst-italic mb-2">Diposting pada {{ date('d F Y', strtotime($berita->created_at)) }}
                     oleh
                     {{ $berita->penulis }}
                 </span>
                 <!-- Post categories-->
-
+                {{-- <a class="badge bg-warning text-decoration-none link-light me-2"
+                    href="{{ route('caribidang', $berita->bidang) }}">{{ $berita->bidang }}</a> --}}
                 {{-- <a class="badge bg-secondary text-decoration-none link-light" href="#!">Kesenian</a> --}}
             </header>
             <!-- Preview image figure-->
@@ -28,61 +28,117 @@
                     {!! $berita->deskripsi !!}
                 </p>
             </section>
-            <a href="" class="btn btn-primary rounded mb-3"><i class="fab fa-facebook-f"> </i> Bagikan ke Facebook</a>
-            <a href="" class="btn rounded mb-3 text-white" style="background-color: rgb(208, 67, 51)"><i
-                    class="fab fa-instagram"></i>
-                Bagikan
-                ke
-                Instagram</a>
+            <div class="d-flex justify-content-start">
+                <a href="" class="btn btn-primary rounded mb-3 me-1"><i class="fab fa-facebook-f"> </i> Bagikan ke
+                    Facebook</a>
+                <a href="" class="btn rounded mb-3 text-white" style="background-color: rgb(208, 67, 51)"><i
+                        class="fab fa-instagram"></i>
+                    Bagikan
+                    ke
+                    Instagram</a>
+            </div>
+
         </article>
+
+
         <!-- Comments section-->
         <section class="mb-5">
             <div class="card bg-light">
                 <div class="card-body">
+                    <h1 class="h5">Tambahkan Komentar</h1>
                     <!-- Comment form-->
-                    <form class="mb-4">
-                        <input type="text" placeholder="Nama" class="form-control mb-2">
-                        <textarea class="form-control" rows="3" placeholder=" Komentar"></textarea>
+                    <form class="mb-4" method="POST" action="{{ route('kirim-komentar') }}">
+                        @csrf
+                        <input type="hidden" name="id_berita" id="id_berita" value="{{ $berita->id }}">
+                        <input type="text" name="nama" placeholder="Nama" class="form-control mb-2">
+                        <textarea class="form-control" name="komentar" rows="3" placeholder="Komentar"></textarea>
+                        <button type="submit" class="btn btn-sm btn-primary  my-2">Kirim</button>
                     </form>
-                    <!-- Comment with nested comments-->
-                    <div class="d-flex mb-4">
-                        <!-- Parent comment-->
-                        <div class="flex-shrink-0"><img class="rounded-circle"
-                                src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                        <div class="ms-3">
-                            <div class="fw-bold">Commenter Name</div>
-                            If you're going to lead a space frontier, it has to be government; it'll never be private
-                            enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified
-                            risks.
-                            <!-- Child comment 1-->
-                            <div class="d-flex mt-4">
-                                <div class="flex-shrink-0"><img class="rounded-circle"
-                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                <div class="ms-3">
-                                    <div class="fw-bold">Commenter Name</div>
-                                    And under those conditions, you cannot establish a capital-market evaluation of that
-                                    enterprise. You can't get investors.
-                                </div>
-                            </div>
-                            <!-- Child comment 2-->
-                            <div class="d-flex mt-4">
-                                <div class="flex-shrink-0"><img class="rounded-circle"
-                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                <div class="ms-3">
-                                    <div class="fw-bold">Commenter Name</div>
-                                    When you put money directly to a problem, it makes a good headline.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <!-- Single comment-->
+                    @php
+                        use App\Models\Komentar;
+                        use App\Models\Komentar2;
+                        $komen1 = Komentar::where('id_berita', $berita->id)->get();
+                    @endphp
                     <div class="d-flex">
-                        <div class="flex-shrink-0"><img class="rounded-circle"
-                                src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                        <div class="ms-3">
-                            <div class="fw-bold">Commenter Name</div>
-                            When I look at the universe and all the ways the universe wants to kill us, I find it hard to
-                            reconcile that with statements of beneficence.
+                        <div class="row">
+                            @foreach ($komen1 as $k1)
+                                <div class="col-sm-12">
+                                    <div class="ms-3">
+                                        <div class="fw-bold">{{ $k1->nama }}</div>
+                                        {{ $k1->komentar }}
+                                        <div>
+                                            <small
+                                                class="text-muted">{{ date('d F Y', strtotime($k1->created_at)) }}</small>
+                                            <small type="button" class="text-muted ms-2 text-decoration-underline"
+                                                data-bs-toggle="collapse" data-bs-target="#balask1{{ $k1->id }}"
+                                                aria-expanded="false" aria-controls="balas">Balas</small>
+                                            <div class="collapse" id="balask1{{ $k1->id }}">
+                                                <div class="card-body">
+                                                    <form class="mb-0" method="POST"
+                                                        action="{{ route('balas-komentar') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="id_komentar" id="id_komentar"
+                                                            value="{{ $k1->id }}">
+                                                        <input type="text" name="nama" placeholder="Nama"
+                                                            class="form-control mb-2">
+                                                        <textarea class="form-control" name="komentar" rows="3" placeholder="Balasan Komentar"></textarea>
+                                                        <button type="submit"
+                                                            class="btn btn-sm btn-primary  mt-2">Balas</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Child comment 1-->
+                                        <div class="d-flex mt-3">
+                                            @php
+                                                $komen2 = Komentar2::where('id_komentar', $k1->id)->get();
+                                            @endphp
+                                            <div class="row">
+                                                @foreach ($komen2 as $k2)
+                                                    <div class="col-sm-12 mb-2">
+                                                        <div class="ms-3">
+                                                            <div class="fw-bold">{{ $k2->nama }}</div>
+                                                            {{ $k2->komentar }}
+                                                            <div>
+                                                                <small
+                                                                    class="text-muted">{{ date('d F Y', strtotime($k2->created_at)) }}</small>
+                                                                <small type="button"
+                                                                    class="text-muted ms-2 text-decoration-underline"
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#balask2{{ $k2->id }}"
+                                                                    aria-expanded="false"
+                                                                    aria-controls="balas">Balas</small>
+                                                                <div class="collapse"
+                                                                    id="balask2{{ $k2->id }}">
+                                                                    <div class="card-body">
+                                                                        <form class="mb-0" method="POST"
+                                                                            action="{{ route('balas-komentar') }}">
+                                                                            @csrf
+                                                                            <input type="hidden" name="id_komentar"
+                                                                                id="id_komentar"
+                                                                                value="{{ $k2->id }}">
+                                                                            <input type="hidden" name="id_berita"
+                                                                                id="id_berita" value="{{ $berita->id }}">
+                                                                            <input type="text" name="nama"
+                                                                                placeholder="Nama"
+                                                                                class="form-control mb-2">
+                                                                            <textarea class="form-control" name="komentar" rows="3" placeholder="Balasan Komentar"></textarea>
+                                                                            <button type="submit"
+                                                                                class="btn btn-sm btn-primary  mt-2">Balas</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

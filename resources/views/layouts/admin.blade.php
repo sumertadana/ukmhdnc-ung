@@ -41,7 +41,8 @@
                     <img src="{{ asset('assets/img/logo/ukm-logo.ico') }}" width="50px" height="50px" alt="">
                 </div>
 
-                <div class="sidebar-brand-text mx-2">UKM HDNC
+                <div class="sidebar-brand-text">
+                    <img src="{{ asset('assets/img/logo/ukm.png') }}" alt="">
                 </div>
             </a>
             <!-- Divider -->
@@ -65,6 +66,13 @@
                 <a class="nav-link" href="{{ route('pengurus') }}">
                     <i class="fas fa-user-friends"></i>
                     <span>Pengurus</span></a>
+            </li>
+            <hr class="sidebar-divider my-0 py-0">
+            <!-- user -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('users') }}">
+                    <i class="fas fa-user"></i>
+                    <span>Pengguna</span></a>
             </li>
             <hr class="sidebar-divider my-0 py-0">
             <!-- inventaris -->
@@ -94,8 +102,24 @@
                     <i class="fas fa-camera"></i>
                     <span>Galeri</span></a>
             </li>
+            <hr class="sidebar-divider my-0 py-0">
+            <!-- logout -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                    <i class="fas fa-fw fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+                <a class="nav-link" href="{{ route('logout') }}">
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
         </ul>
         <!-- End of Sidebar -->
 
@@ -126,24 +150,49 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
+                                <form class="mb-0"
+                                    action="{{ route('update-pengguna', Auth::user()->id) }}" method="POST">
+                                    @csrf
+                                    <div class="row mx-0">
+                                        <div class="form-group col-sm-12">
+                                            <label for="name">Nama</label>
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                                id="name" name="name" placeholder="Masukan Nama"
+                                                value="{{ Auth::user()->name }}">
+                                            @error('name')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-sm-12">
+                                            <label for="username">Username</label>
+                                            <input type="text"
+                                                class="form-control @error('username') is-invalid @enderror"
+                                                id="username" name="username" placeholder="Masukan username"
+                                                value="{{ Auth::user()->username }}">
+                                            @error('username')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-sm-12 mb-3">
+                                            <label for="password">Password</label>
+                                            <input type="password"
+                                                class="form-control @error('password') is-invalid @enderror"
+                                                id="password" name="password" placeholder="Password Baru"
+                                                autocomplete="new-password">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button type="submit"
+                                            class="btn btn-sm btn-primary float-right mr-3 mb-2">Ubah</button>
+                                    </div>
+                                </form>
+                                {{-- <div class="dropdown-divider "></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
-                                </a>
+                                </a> --}}
                             </div>
+
                         </li>
                     </ul>
 

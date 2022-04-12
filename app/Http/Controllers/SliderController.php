@@ -99,7 +99,7 @@ class SliderController extends Controller
             $request->all(),
             [
                 'judul' => 'required|string|max:100',
-                'gambar' => 'file|image|mimes:jpg|max:10000',
+                'gambar' => 'file|image|mimes:jpg|max:2048',
                 // 'deskripsi' => 'required|string|max:100'
             ]
         );

@@ -8,6 +8,7 @@ use App\Http\Controllers\pengurusController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,8 @@ Route::get('/pengurus', [PengurusController::class, 'show'])->name('tampil-Pengu
 route::get('/galeri', [GaleriController::class, 'show'])->name('tampil-galeri');
 Route::get('/cari', [BeritaController::class, 'cariartikel'])->name('cari-artikel');
 Route::get('/bidang={id}', [PagesController::class, 'caribidang'])->name('caribidang');
+route::post('/kirim-komentar', [BeritaController::class, 'kirimkomentar'])->name('kirim-komentar');
+route::post('/balas-komentar', [BeritaController::class, 'balaskomentar'])->name('balas-komentar');
 
 
 Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
@@ -77,5 +80,11 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::post('/galeri/kirim-galeri', [GaleriController::class, 'store'])->name('kirim-galeri');
         Route::post('/galeri/update-galeri/{id}', [GaleriController::class, 'update'])->name('update-galeri');
         Route::get('/galeri/hapus-galeri/{id}', [GaleriController::class, 'destroy'])->name('hapus-galeri');
+
+        route::get('/pengguna', [UserController::class, 'index'])->name('users');
+        route::get('/pengguna/tambah-pengguna', [UserController::class, 'create'])->name('tambah-pengguna');
+        route::post('/pengguna/kirim-pengguna', [UserController::class, 'store'])->name('kirim-pengguna');
+        route::post('/pengguna/update-pengguna/{id}', [UserController::class, 'update'])->name('update-pengguna');
+        route::get('/pengguna/hapus-pengguna/{id}', [UserController::class, 'destroy'])->name('hapus-pengguna');
     });
 });

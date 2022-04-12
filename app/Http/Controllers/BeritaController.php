@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Models\Berita;
 use App\Models\Bidang;
+use App\Models\Komentar;
+use App\Models\Komentar2;
 
 class BeritaController extends Controller
 {
@@ -20,6 +22,7 @@ class BeritaController extends Controller
             ->select('berita.*', 'bidang.bidang')
             ->orderByDesc('berita.created_at')
             ->get();
+
         return view('admin/berita/berita', compact('berita'));
     }
 
@@ -152,17 +155,15 @@ class BeritaController extends Controller
     public function destroy($id)
     {
         $delete = Berita::find($id);
+        $komentar1 = Komentar::where('id_berita', $id)->get();
+        $komentar2 = Komentar2::where('id_berita', $id)->get();
         $lokasi = public_path('assets/img/berita/' . $delete->gambar);
         File::delete($lokasi);
+        $komentar1->delete();
+        $komentar2->delete();
         $delete->delete();
 
         return redirect()->back()->with('success', 'Berita Berhasil dihapus');
-    }
-
-    public function galeri()
-    {
-        $galeri = Berita::all();
-        return view('users.galeri', compact('galeri'));
     }
 
     public function cariartikel(Request $request)
@@ -182,5 +183,37 @@ class BeritaController extends Controller
             $x = 2;
             return view('users.index', compact('cari', 'x'));
         };
+    }
+
+    public function kirimkomentar(Request $request)
+    {
+        $berita = Berita::find($request->id_berita);
+        $jumlahkomentar = $berita->komentar + 1;
+        $berita->komentar = $jumlahkomentar;
+        $berita->save();
+
+        $komentar = new Komentar;
+        $komentar->id_berita = $request->id_berita;
+        $komentar->nama = $request->nama;
+        $komentar->komentar = $request->komentar;
+        $komentar->save();
+        return redirect()->back();
+    }
+
+    public function balaskomentar(Request $request)
+    {
+        $berita = Berita::find($request->id_berita);
+        $jumlahkomentar = $berita->komentar + 1;
+        $berita->komentar = $jumlahkomentar;
+        $berita->save();
+
+        $balas = new Komentar2;
+        $balas->id_komentar = $request->id_komentar;
+        $balas->id_berita = $request->id_berita;
+        $balas->nama = $request->nama;
+        $balas->komentar = $request->komentar;
+        $balas->save();
+
+        return redirect()->back();
     }
 }

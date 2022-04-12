@@ -31,6 +31,7 @@
                 <table class="table dataTable table-bordered" id="myTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>Foto</th>
                             <th>NIM</th>
                             {{-- <th>No</th> --}}
                             <th>Nama</th>
@@ -40,13 +41,15 @@
                             <th>Jurusan</th>
                             <th>Alamat</th>
                             <th>Status</th>
-                            <th>Angkatan</th>
+                            <th>Tahun</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($anggota as $agt)
                             <tr>
+                                <td class="p-1"><img src="{{ asset('assets/img/anggota/' . $agt->foto) }}"
+                                        alt="" width="75px"></td>
                                 <td>{{ $agt->nim }}</td>
                                 {{-- <td>{{ $loop->iteration }}</td> --}}
                                 <td>{{ $agt->nama }}</td>
