@@ -9,6 +9,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SuratMasukController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,5 +87,10 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         route::post('/pengguna/kirim-pengguna', [UserController::class, 'store'])->name('kirim-pengguna');
         route::post('/pengguna/update-pengguna/{id}', [UserController::class, 'update'])->name('update-pengguna');
         route::get('/pengguna/hapus-pengguna/{id}', [UserController::class, 'destroy'])->name('hapus-pengguna');
+
+        route::get('/surat-masuk', [SuratMasukController::class, 'index'])->name('surat-masuk');
+        route::post('/surat-masuk/kirim-surat-masuk', [SuratMasukController::class, 'store'])->name('kirim-surat-masuk');
+        route::post('/surat-masuk/update-surat-masuk/{id}', [SuratMasukController::class, 'update'])->name('update-surat-masuk');
+        route::get('/surat-masuk/hapus-surat-masuk/{id}', [SuratMasukController::class, 'destroy'])->name('hapus-surat-masuk');
     });
 });

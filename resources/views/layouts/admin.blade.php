@@ -103,6 +103,13 @@
                     <span>Galeri</span></a>
             </li>
             <hr class="sidebar-divider my-0 py-0">
+            <!-- suratmasuk -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('surat-masuk') }}">
+                    <i class="fas fa-envelope"></i>
+                    <span>Surat Masuk</span></a>
+            </li>
+            <hr class="sidebar-divider my-0 py-0">
             <!-- logout -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
