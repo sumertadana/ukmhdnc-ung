@@ -20,8 +20,6 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            {{-- <a href="{{ route('tambah-anggota') }}" class="btn btn-primary shadow">Tambah <i
-                    class="far fa-plus-square"></i></a> --}}
             <button type="button" class="btn btn-primary shadow" data-toggle="modal" data-target="#tambah">Tambah <i
                     class="far fa-plus-square"></i>
             </button>
@@ -32,15 +30,15 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>NIM</th>
                             <th>Nama</th>
-                            <th>JK</th>
-                            <th class="d-none">HP</th>
-                            <th class="d-none">Fakultas</th>
+                            <th>NIM</th>
+                            <th>Fakultas</th>
                             <th>Jurusan</th>
+                            <th>Angkatan</th>
+                            <th>JK</th>
+                            <th>HP</th>
                             <th>Alamat</th>
                             <th>Status</th>
-                            <th>Angkatan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -48,12 +46,13 @@
                         @foreach ($anggota as $agt)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $agt->nim }}</td>
                                 <td>{{ $agt->nama }}</td>
-                                <td>{{ $agt->jk }}</td>
-                                <td class="d-none">{{ $agt->hp }}</td>
-                                <td class="d-none">{{ $agt->fakultas }}</td>
+                                <td>{{ $agt->nim }}</td>
+                                <td>{{ $agt->fakultas }}</td>
                                 <td>{{ $agt->jurusan }}</td>
+                                <td>{{ $agt->angkatan }}</td>
+                                <td>{{ $agt->jk }}</td>
+                                <td>{{ $agt->hp }}</td>
                                 <td>{{ $agt->alamat }}</td>
                                 <td>
                                     @switch($agt->status)
@@ -65,7 +64,6 @@
                                             Anggota Luar Biasa
                                     @endswitch
                                 </td>
-                                <td>{{ $agt->angkatan }}</td>
                                 <td>
                                     <a href="{{ route('edit-anggota', $agt->id) }}"
                                         class="btn btn-sm btn-primary shadow mb-1"><i class="fa fa-edit"></i></a>
@@ -146,9 +144,8 @@
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="hp">No Hp</label>
-                                <input type="text" class="form-control @error('hp') is-invalid @enderror"
-                                    id="hp" name="hp" placeholder="Masukan No Hp"
-                                    value="{{ old('hp') }}">
+                                <input type="text" class="form-control @error('hp') is-invalid @enderror" id="hp"
+                                    name="hp" placeholder="Masukan No Hp" value="{{ old('hp') }}">
                                 @error('hp')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror

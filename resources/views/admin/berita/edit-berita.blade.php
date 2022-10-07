@@ -22,12 +22,17 @@
             <form class="form-horizontal" enctype="multipart/form-data" method="POST"
                 action="{{ route('update-berita', $edit->id) }}">
                 @csrf
-                <input type="hidden" name="penulis" id="penulis" value="{{ $edit->penulis }}">
+                {{-- <input type="hidden" name="penulis" id="penulis" value="{{ $edit->penulis }}"> --}}
                 <div class="row">
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-6 mb-md-0"">
                         <label for="judul">Judul</label>
-                        <input type="text" class="form-control required" id="judul" name="judul" placeholder="Masukan Judul"
-                            value="{{ $edit->judul }}" minlength="2" required="">
+                        <input type="text" class="form-control required" id="judul" name="judul"
+                            placeholder="Masukan Judul" value="{{ $edit->judul }}" minlength="2" required="">
+                    </div>
+                    <div class="form-group col-md-6 mb-md-0">
+                        <label for="judul">Penulis</label>
+                        <input type="text" class="form-control required" id="penulis" name="penulis"
+                            placeholder="Masukan Nama Penulis" value="{{ $edit->penulis }}" minlength="2" required="">
                     </div>
                     <div class="form-group col-md-6 mb-md-0">
                         <label for="id_bidang">Bidang</label>

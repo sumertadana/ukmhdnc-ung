@@ -49,8 +49,8 @@
                                 {{-- <td>{{ $usr->email }}</td> --}}
                                 @if (Auth::user()->role = 'superadmin')
                                     <td>
-                                        <button type="button" class="btn btn-primary shadow mb-1" data-toggle="modal"
-                                            data-target="#edit{{ $usr->id }}"><i class="fa fa-edit"></i></button>
+                                        {{-- <button type="button" class="btn btn-primary shadow mb-1" data-toggle="modal"
+                                            data-target="#edit{{ $usr->id }}"><i class="fa fa-edit"></i></button> --}}
                                         <button type="button" class="btn btn-danger shadow" data-toggle="modal"
                                             data-target="#hapus{{ $usr->id }}"><i class="fa fa-trash-alt"></i></button>
                                     </td>
@@ -84,8 +84,8 @@
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <label for="name">Nama</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                                name="name" placeholder="Masukan Nama" value="{{ old('name') }}">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                id="name" name="name" placeholder="Masukan Nama" value="{{ old('name') }}">
                             @error('name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -99,14 +99,6 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        {{-- <div class="form-group col-sm-12">
-                            <label for="email">E-mail</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                                name="email" placeholder="Masukan email" value="{{ old('email') }}">
-                            @error('email')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div> --}}
                         <div class="form-group col-sm-12">
                             <label for="password">Password</label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror"
@@ -116,16 +108,6 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        {{-- <div class="form-group col-sm-12">
-                            <label for="password_confirmation">Konfirmasi Password</label>
-                            <input type="password"
-                                class="form-control @error('password_confirmation') is-invalid @enderror"
-                                id="password_confirmation" name="password_confirmation"
-                                placeholder="Konfirmasi Password" required autocomplete="new-password">
-                            @error('password_confirmation')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div> --}}
                     </div>
             </div>
             <div class="modal-footer">
@@ -138,6 +120,60 @@
 </div>
 
 @foreach ($user as $usr)
+    {{-- modal edit data --}}
+    {{-- <div class="modal fade" id="tambah{{ $usr->id }}" tabindex="-1" aria-hidden="true" id="staticBackdrop"
+        data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modelHeading">Edit Pengguna</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" enctype="multipart/form-data" method="POST"
+                        action="{{ route('kirim-pengguna') }}">
+                        @csrf
+                        <input type="hidden" name="role" value="admin">
+                        <div class="row">
+                            <div class="form-group col-sm-12">
+                                <label for="name">Nama</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    id="name" name="name" placeholder="Masukan Nama"
+                                    value="{{ $usr->nama }}">
+                                @error('name')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                    id="username" name="username" placeholder="Masukan username"
+                                    value="{{ $usr->username }}">
+                                @error('username')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                    id="password" name="password" placeholder="Masukan password" required
+                                    autocomplete="new-password">
+                                @error('password')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary" value="create">Simpan</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div> --}}
     <!-- modal hapus -->
     <div class="modal fade" id="hapus{{ $usr->id }}" tabindex="-1" aria-hidden="true" id="staticBackdrop"
         data-backdrop="static" data-keyboard="false">
@@ -154,7 +190,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <a href="{{ route('hapus-pengguna', $usr->id) }}" type="button" class="btn btn-danger">Hapus</a>
+                    <a href="{{ route('hapus-pengguna', $usr->id) }}" type="button"
+                        class="btn btn-danger">Hapus</a>
                 </div>
             </div>
         </div>
@@ -171,7 +208,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // cari jurusan
         })
     </script>
 @endsection
