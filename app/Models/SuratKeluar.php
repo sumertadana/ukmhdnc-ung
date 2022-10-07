@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +11,7 @@ class SuratKeluar extends Model
 {
     use HasFactory;
 
-    protected $table = 'suratkeluar';
+    protected $table = 'surat_keluar';
     protected $fillable = [
         'no_surat',
         'perihal',
@@ -17,4 +19,10 @@ class SuratKeluar extends Model
         'instansi',
         'periode'
     ];
+
+    public function getTglSuratAttribute()
+    {
+        return Carbon::parse($this->attributes['tgl_surat'])
+            ->translatedFormat('d F Y');
+    }
 }

@@ -26,16 +26,18 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="nama">Nama</label>
-                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"
-                            placeholder="Masukan Nama" value="{{ $anggota->nama }}" value="{{ old('nama') }}">
+                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama"
+                            name="nama" placeholder="Masukan Nama" value="{{ $anggota->nama }}"
+                            value="{{ old('nama') }}">
                         @error('nama')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="nim">NIM</label>
-                        <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim" name="nim"
-                            placeholder="Masukan NIM" value="{{ $anggota->nim }}" value="{{ old('nim') }}">
+                        <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim"
+                            name="nim" placeholder="Masukan NIM" value="{{ $anggota->nim }}"
+                            value="{{ old('nim') }}">
                         @error('nim')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -72,8 +74,9 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="hp">No Hp</label>
-                        <input type="text" class="form-control @error('hp') is-invalid @enderror" id="hp" name="hp"
-                            placeholder="Masukan No Hp" value="{{ $anggota->hp }}" value="{{ old('hp') }}">
+                        <input type="text" class="form-control @error('hp') is-invalid @enderror" id="hp"
+                            name="hp" placeholder="Masukan No Hp" value="{{ $anggota->hp }}"
+                            value="{{ old('hp') }}">
                         @error('hp')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -105,17 +108,6 @@
                         @enderror
                     </div>
                     <div class="form-group col-sm-6">
-                        <label for="foto">Foto</label>
-                        <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto"
-                            value="">
-                        <div id="filehelp" class="small">Format: jpg | Maks: 2MB | Kosongkan jika tidak ingin
-                            mengubah foto
-                        </div>
-                        @error('foto')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group col-sm-6">
                         <label for="status">Status Anggota</label>
                         <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
                             <option value="{{ $anggota->status }}" hidden>
@@ -128,7 +120,6 @@
                             <option value="0">Anggota Biasa</option>
                             <option value="1">Anggota Luar Biasa</option>
                         </select>
-                        <small>Anggota luar biasa adalah anggota yang sudah mengikuti proses penerimaan di UKM-HDNC</small>
                         @error('status')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror

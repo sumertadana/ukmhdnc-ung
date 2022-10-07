@@ -46,11 +46,12 @@
                                 <td>{{ $brt->view }}</td>
                                 <td>{{ $brt->komentar }}</td>
                                 <td>{{ $brt->bidang }}</td>
-                                <td><img src="{{ asset('assets/img/berita/' . $brt->gambar) }}" alt="" height="75"></td>
+                                <td><img src="{{ asset('assets/img/berita/' . $brt->gambar) }}" alt=""
+                                        height="75"></td>
                                 <td>
-                                    <a href="{{ route('edit-berita', $brt->id) }}" class="btn btn-primary shadow"><i
+                                    <a href="{{ route('edit-berita', $brt->id) }}" class="btn btn-sm btn-primary shadow"><i
                                             class="fa fa-edit"></i></a>
-                                    <a href="{{ route('hapus-berita', $brt->id) }}" class="btn btn-danger shadow"><i
+                                    <a href="{{ route('hapus-berita', $brt->id) }}" class="btn btn-sm btn-danger shadow"><i
                                             class="fa fa-trash-alt"></i></a>
                                 </td>
                             </tr>

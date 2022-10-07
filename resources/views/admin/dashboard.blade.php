@@ -7,11 +7,22 @@
     use App\Models\Galeri;
     use App\Models\Inventaris;
 
+    //menghitung jumlah anggota berita galeri dan inventaris
     $anggota = Anggota::count();
     $berita = Berita::count();
     $galeri = Galeri::count();
     $inventaris = Inventaris::count();
+
+    //menghitung jumlah anggota per angkatan
+    // $angkatan = Anggota::groupBy('angkatan')->get();
+    // ->orderByDesc('angkatan')
+    // ->get();
+
+    // dd($angkatan);
+
     @endphp
+
+
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
@@ -97,5 +108,50 @@
                 </div>
             </div>
         </div>
+
     </div>
+
+    {{-- <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">Grafik Anggota</h6>
+                </div>
+                <canvas class="p-3" id="myChart" height="300"></canvas>
+            </div>
+        </div>
+    </div> --}}
+
+@section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
+        integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['2016', '2017', '2018', '2019', '2020', '2021'],
+                datasets: [{
+                    label: 'Angkatan',
+                    data: [37, 29, 39, 25, 22, 33],
+                    backgroundColor: [
+                        'blue'
+                    ],
+                    borderColor: [
+                        'white'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+@endsection
 @endsection

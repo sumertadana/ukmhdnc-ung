@@ -33,7 +33,6 @@ class PengurusController extends Controller
 
     public function carijabatan(Request $request)
     {
-        // $bidang = Bidang::find($request->kode);
         $jabatan = Jabatan::where('id_bidang', $request->kode)->get();
         foreach ($jabatan as $jbt) {
             echo "<option value='$jbt->id'>$jbt->jabatan</option>";
@@ -76,7 +75,7 @@ class PengurusController extends Controller
                 'nama' => 'required|string|max:100',
                 'nim' => 'required|string|min:9|max:9',
                 'periode' => 'required|string|max:4|min:4',
-                // 'foto' => 'required|file|image|mimes:jpg|max:2048',
+                'foto' => 'required|file|image|mimes:jpg|max:1024',
                 'bidang' => 'required|string',
                 'jabatan' => 'required|string'
             ]
@@ -86,9 +85,9 @@ class PengurusController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // $filename = $request->nama . '.' . $request->foto->extension();
-        // $lokasi = public_path('assets/img/pengurus');
-        // $request->file('foto')->move($lokasi, $filename);
+        $filename = $request->nama . '.' . $request->foto->extension();
+        $lokasi = public_path('assets/img/anggota');
+        $request->file('foto')->move($lokasi, $filename);
 
         $tambah = Pengurus::Create(
             [
@@ -96,7 +95,7 @@ class PengurusController extends Controller
                 'id_bidang' => $request->bidang,
                 'id_jabatan' => $request->jabatan,
                 'periode' => $request->periode,
-                // 'foto' => $filename
+                'foto' => $filename
             ]
         );
         if ($tambah) {
@@ -147,13 +146,14 @@ class PengurusController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
         $validator = Validator::make(
             $request->all(),
             [
                 'nama' => 'required|string|max:100',
                 'nim' => 'required|string|min:9|max:9',
                 'periode' => 'required|string|max:4|min:4',
-                // 'foto' => 'file|image|mimes:jpg|max:2048',
+                'foto' => 'file|image|mimes:jpg|max:1024',
                 'bidang' => 'required|string',
                 'jabatan' => 'required|string'
             ]
@@ -164,31 +164,31 @@ class PengurusController extends Controller
         }
 
         $update = Pengurus::find($id);
-        // if ($request->hasFile('foto')) {
-        //     $filename = $request->nama . '.' . $request->foto->extension();
-        //     $lokasi = public_path('assets/img/pengurus/');
-        //     File::delete($lokasi . $update->foto);
-        //     $request->file('foto')->move($lokasi, $filename);
+        if ($request->hasFile('foto')) {
+            $filename = $request->nama . '.' . $request->foto->extension();
+            $lokasi = public_path('assets/img/anggota/');
+            File::delete($lokasi . $update->foto);
+            $request->file('foto')->move($lokasi, $filename);
 
-        //     $update->update(
-        //         [
-        //             'nim' => $request->nim,
-        //             'id_bidang' => $request->bidang,
-        //             'id_jabatan' => $request->jabatan,
-        //             'periode' => $request->periode,
-        //             'foto' => $filename
-        //         ]
-        //     );
-        // } else {
-        $update->update(
-            [
-                'nim' => $request->nim,
-                'id_bidang' => $request->bidang,
-                'id_jabatan' => $request->jabatan,
-                'periode' => $request->periode
-            ]
-        );
-        // }
+            $update->update(
+                [
+                    'nim' => $request->nim,
+                    'id_bidang' => $request->bidang,
+                    'id_jabatan' => $request->jabatan,
+                    'periode' => $request->periode,
+                    'foto' => $filename
+                ]
+            );
+        } else {
+            $update->update(
+                [
+                    'nim' => $request->nim,
+                    'id_bidang' => $request->bidang,
+                    'id_jabatan' => $request->jabatan,
+                    'periode' => $request->periode
+                ]
+            );
+        }
 
         if ($update) {
             return redirect(route('pengurus'))->with('success', 'Data Berhasil diupdate');
@@ -206,7 +206,7 @@ class PengurusController extends Controller
     public function destroy($id)
     {
         $hapus = Pengurus::find($id);
-        // File::delete('assets/img/pengurus' . $hapus->foto);
+        File::delete('assets/img/pengurus' . $hapus->foto);
         $hapus->delete();
 
         if ($hapus) {

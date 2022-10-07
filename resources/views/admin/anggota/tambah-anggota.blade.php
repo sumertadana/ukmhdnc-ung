@@ -1,4 +1,8 @@
-@extends('layouts.admin')
+{{-- halaman ini tidak terppakai karen proses penambahan anggota baru sudah dilakukan dengan menggunakan modal --}}
+{{-- jika ingin menggunakan halaman ini, silahkan hapus modal pada view/admin/anggota/anggota --}}
+{{-- kemudian uncomment script dibawah ini, terima kasih. --}}
+
+{{-- @extends('layouts.admin')
 
 @section('konten')
     <!-- Page Heading -->
@@ -26,16 +30,16 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="nama">Nama</label>
-                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"
-                            placeholder="Masukan Nama" value="{{ old('nama') }}">
+                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama"
+                            name="nama" placeholder="Masukan Nama" value="{{ old('nama') }}">
                         @error('nama')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="nim">NIM</label>
-                        <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim" name="nim"
-                            placeholder="Masukan NIM" value="{{ old('nim') }}">
+                        <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim"
+                            name="nim" placeholder="Masukan NIM" value="{{ old('nim') }}">
                         @error('nim')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -71,8 +75,8 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="hp">No Hp</label>
-                        <input type="text" class="form-control @error('hp') is-invalid @enderror" id="hp" name="hp"
-                            placeholder="Masukan No Hp" value="{{ old('hp') }}">
+                        <input type="text" class="form-control @error('hp') is-invalid @enderror" id="hp"
+                            name="hp" placeholder="Masukan No Hp" value="{{ old('hp') }}">
                         @error('hp')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -160,4 +164,4 @@
             });
         })
     </script>
-@endsection
+@endsection --}}

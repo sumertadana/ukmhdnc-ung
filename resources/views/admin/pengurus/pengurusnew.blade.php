@@ -1,8 +1,31 @@
 @extends('layouts.admin')
+@php
+use App\Models\Pengurus;
+
+$periode = Pengurus::SELECT('periode')
+    ->groupBy('periode')
+    ->get();
+
+@endphp
+
 
 @section('konten')
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Pengurus</h1>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">New Pengurus</h1>
+        <div class="dropdown">
+            <a class="btn btn-sm btn-primary shadow-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                aria-expanded="false">
+                Periode
+            </a>
+
+            <div class="dropdown-menu">
+                @foreach ($periode as $period)
+                    <a class="dropdown-item" href="#">{{ $period->periode }}</a>
+                @endforeach
+            </div>
+        </div>
+    </div>
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -20,7 +43,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <button type="button" class="btn btn-primary shadow" data-toggle="modal" data-target="#tambah">Tambah <i
+            <button type="button" class="btn btn-md btn-primary shadow" data-toggle="modal" data-target="#tambah">Tambah <i
                     class="fas fa-plus-square"></i></button>
         </div>
         <div class="card-body">
@@ -40,13 +63,14 @@
                     <tbody>
                         @foreach ($pengurus as $pgr)
                             <tr>
-                                <td class="pt-1"><img src="{{ asset('assets/img/anggota/' . $pgr->foto) }}" alt=""
-                                        width="75px"></td>
+                                <td class="pt-1"><img src="{{ asset('assets/img/anggota/' . $pgr->foto) }}"
+                                        alt="" width="75px"></td>
                                 <td>{{ $pgr->nim }}</td>
                                 <td>{{ $pgr->nama }}</td>
                                 <td>{{ $pgr->bidang }}</td>
                                 <td>{{ $pgr->jabatan }}</td>
                                 <td>{{ $pgr->periode }}</td>
+
                                 <td>
                                     <a href="{{ route('edit-pengurus', $pgr->id) }}"
                                         class="btn btn-sm btn-primary shadow"><i class="fa fa-edit"></i></a>
@@ -118,21 +142,31 @@
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="periode">Periode</label>
-                                <input type="text" class="form-control @error('periode') is-invalid @enderror"
-                                    id="periode" name="periode" placeholder="Masukan periode"
-                                    value="{{ old('periode') }}">
-                                @error('periode')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                                <div class="d-flex justify-content-between" id="periode">
+                                    <input type="text"
+                                        class="col-5 form-control @error('periode') is-invalid @enderror" name="periode"
+                                        placeholder="periode" value="{{ old('periode') }}">
+                                    @error('periode')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                    <div class="col-1">-</div>
+                                    <input type="text"
+                                        class="col-5 form-control @error('periode') is-invalid @enderror" name="periode"
+                                        placeholder="periode" value="{{ old('periode') }}">
+                                    @error('periode')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                             </div>
-                            <div class="form-group col-sm-6">
+                            {{-- <div class="form-group col-sm-6">
                                 <label for="foto">Foto</label>
-                                <input type="file" class="form-control @error('foto') is-invalid @enderror"
-                                    id="foto" name="foto" value="">
+                                <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto"
+                                    name="foto" value="">
                                 @error('foto')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
                         </div>
 
                 </div>

@@ -20,7 +20,7 @@
                 <div class="modal-content">
                     <div class="modal-body p-0">
                         <div class="ratio ratio-4x3">
-                            <iframe src="{{ asset('assets/img/galeri/' . $glr->foto) }}" title="YouTube video"
+                            <iframe src="{{ asset('assets/img/galeri/' . $glr->foto) }}" title="Galeri Kegiatan"
                                 allowfullscreen></iframe>
                         </div>
                     </div>

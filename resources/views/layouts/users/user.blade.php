@@ -31,7 +31,8 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-primary sticky-top shadow-lg pb-0 my-0">
         <div class="container">
             <a class="navbar-brand my-md-1 py-0 my-0" href="#!">
-                <img src="{{ asset('assets/img/logo/logo-depan.png') }}" class="mb-1 mt-sm-0 img-fluid" alt="">
+                <img src="{{ asset('assets/img/logo/logo-depan.png') }}" class="mb-1 mt-sm-0 img-fluid"
+                    alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -41,10 +42,11 @@
                     <li class="nav-item"><a class="nav-link text-white" href="{{ url('/') }}">Beranda</a></li>
                     <li class="nav-item"><a class="nav-link text-white"
                             href="{{ route('tampil-Pengurus') }}">Struktur</a></li>
-                    <li class="nav-item"><a class="nav-link text-white"
-                            href="{{ route('tampil-galeri') }}">Galeri</a>
+                    <li class="nav-item"><a class="nav-link text-white" href="{{ route('tampil-galeri') }}">Galeri</a>
                     </li>
                     <li class="nav-item"><a class="nav-link text-white" href="{{ route('login') }}">Login</a>
+                    </li>
+                    {{-- <li class="nav-item"><a class="nav-link text-white" href="{{ route('daftar') }}">Daftar</a> --}}
                     </li>
                 </ul>
                 <form class="d-flex mb-2 mb-md-0" action="{{ route('cari-artikel') }}">

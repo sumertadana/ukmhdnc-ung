@@ -10,6 +10,7 @@ use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SuratMasukController;
+use App\Http\Controllers\SuratKeluarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,14 +27,15 @@ use App\Http\Controllers\SuratMasukController;
 //     return view('users.index');
 // });
 Route::get('/', [PagesController::class, 'index'])->name('beranda');
+// Route::get('/pendaftaran-anggota-baru', [PagesController::class, 'daftar'])->name('daftar');
 Route::get('/berita/{id}', [BeritaController::class, 'show'])->name('tampil-berita');
 Route::get('/pengurus', [PengurusController::class, 'show'])->name('tampil-Pengurus');
-// Route::get('/galeri', [BeritaController::class, 'galeri'])->name('galeri');
 route::get('/galeri', [GaleriController::class, 'show'])->name('tampil-galeri');
 Route::get('/cari', [BeritaController::class, 'cariartikel'])->name('cari-artikel');
 Route::get('/bidang={id}', [PagesController::class, 'caribidang'])->name('caribidang');
 route::post('/kirim-komentar', [BeritaController::class, 'kirimkomentar'])->name('kirim-komentar');
 route::post('/balas-komentar', [BeritaController::class, 'balaskomentar'])->name('balas-komentar');
+
 
 
 Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
@@ -92,5 +94,9 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         route::post('/surat-masuk/kirim-surat-masuk', [SuratMasukController::class, 'store'])->name('kirim-surat-masuk');
         route::post('/surat-masuk/update-surat-masuk/{id}', [SuratMasukController::class, 'update'])->name('update-surat-masuk');
         route::get('/surat-masuk/hapus-surat-masuk/{id}', [SuratMasukController::class, 'destroy'])->name('hapus-surat-masuk');
+        route::get('/surat-masuk/download-surat-masuk/{id}', [SuratMasukController::class, 'download'])->name('download-surat-masuk');
+
+        route::get('/surat-keluar', [SuratKeluarController::class, 'index'])->name('surat-keluar');
+        route::post('/surat-keluar/kirim-surat-keluar', [SuratKeluarController::class, 'store'])->name('kirim-surat-keluar');
     });
 });

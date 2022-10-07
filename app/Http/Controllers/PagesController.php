@@ -38,4 +38,9 @@ class PagesController extends Controller
             return view('users.index', compact('x', 'bidang'));
         };
     }
+
+    public function daftar()
+    {
+        return view('users.register');
+    }
 }

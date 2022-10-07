@@ -55,7 +55,6 @@ class AnggotaController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $validator = Validator::make(
             $request->all(),
             [
@@ -65,7 +64,6 @@ class AnggotaController extends Controller
                 'jurusan' => 'required|string',
                 'angkatan' => 'required|string|min:4|max:4',
                 'hp' => 'max:14',
-                'foto' => 'file|image|mimes:jpg|max:2048',
                 'alamat' => 'required|string',
                 'status' => 'required|string'
             ]
@@ -75,40 +73,19 @@ class AnggotaController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        if ($request->hasFile('foto')) {
-            $filename = $request->nama . '-' . $request->nim . '.' . $request->foto->extension();
-            $lokasi = public_path('assets/img/anggota');
-            $request->file('foto')->move($lokasi, $filename);
-
-            $tambah = Anggota::Create(
-                [
-                    'nama' => $request->nama,
-                    'nim' => $request->nim,
-                    'id_fakultas' => $request->fakultas,
-                    'id_jurusan' => $request->jurusan,
-                    'angkatan' => $request->angkatan,
-                    'hp' => $request->hp,
-                    'jk' => $request->jk,
-                    'alamat' => $request->alamat,
-                    'status' => $request->status,
-                    'foto' => $filename
-                ]
-            );
-        } else {
-            $tambah = Anggota::Create(
-                [
-                    'nama' => $request->nama,
-                    'nim' => $request->nim,
-                    'id_fakultas' => $request->fakultas,
-                    'id_jurusan' => $request->jurusan,
-                    'angkatan' => $request->angkatan,
-                    'hp' => $request->hp,
-                    'jk' => $request->jk,
-                    'alamat' => $request->alamat,
-                    'status' => $request->status
-                ]
-            );
-        };
+        $tambah = Anggota::Create(
+            [
+                'nama' => $request->nama,
+                'nim' => $request->nim,
+                'id_fakultas' => $request->fakultas,
+                'id_jurusan' => $request->jurusan,
+                'angkatan' => $request->angkatan,
+                'hp' => $request->hp,
+                'jk' => $request->jk,
+                'alamat' => $request->alamat,
+                'status' => $request->status
+            ]
+        );
 
         if ($tambah) {
             return redirect()->back()->with('success', 'Data Berhasil ditambahkan');
@@ -163,7 +140,6 @@ class AnggotaController extends Controller
                 'jurusan' => 'required|string',
                 'angkatan' => 'required|string|min:4|max:4',
                 'hp' => 'max:14',
-                'foto' => 'file|image|mimes:jpg|max:2048',
                 'alamat' => 'required|string',
                 'status' => 'required|string'
             ]
@@ -173,40 +149,53 @@ class AnggotaController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         $update = Anggota::find($id);
-        if ($request->hasFile('foto')) {
-            $filename = $request->nama . '-' . $request->nim . '.' . $request->foto->extension();
-            $lokasi = public_path('assets/img/anggota');
-            $request->file('foto')->move($lokasi, $filename);
+        $update->Update(
+            [
+                'nama' => $request->nama,
+                'nim' => $request->nim,
+                'id_fakultas' => $request->fakultas,
+                'id_jurusan' => $request->jurusan,
+                'angkatan' => $request->angkatan,
+                'hp' => $request->hp,
+                'jk' => $request->jk,
+                'alamat' => $request->alamat,
+                'status' => $request->status
+            ]
+        );
+        // if ($request->hasFile('foto')) {
+        //     $filename = $request->nama . '-' . $request->nim . '.' . $request->foto->extension();
+        //     $lokasi = public_path('assets/img/anggota');
+        //     $request->file('foto')->move($lokasi, $filename);
 
-            $update->Update(
-                [
-                    'nama' => $request->nama,
-                    'nim' => $request->nim,
-                    'id_fakultas' => $request->fakultas,
-                    'id_jurusan' => $request->jurusan,
-                    'angkatan' => $request->angkatan,
-                    'hp' => $request->hp,
-                    'jk' => $request->jk,
-                    'alamat' => $request->alamat,
-                    'status' => $request->status,
-                    'foto' => $filename
-                ]
-            );
-        } else {
-            $update->Update(
-                [
-                    'nama' => $request->nama,
-                    'nim' => $request->nim,
-                    'id_fakultas' => $request->fakultas,
-                    'id_jurusan' => $request->jurusan,
-                    'angkatan' => $request->angkatan,
-                    'hp' => $request->hp,
-                    'jk' => $request->jk,
-                    'alamat' => $request->alamat,
-                    'status' => $request->status
-                ]
-            );
-        };
+        //     $update->Update(
+        //         [
+        //             'nama' => $request->nama,
+        //             'nim' => $request->nim,
+        //             'id_fakultas' => $request->fakultas,
+        //             'id_jurusan' => $request->jurusan,
+        //             'angkatan' => $request->angkatan,
+        //             'hp' => $request->hp,
+        //             'jk' => $request->jk,
+        //             'alamat' => $request->alamat,
+        //             'status' => $request->status,
+        //             'foto' => $filename
+        //         ]
+        //     );
+        // } else {
+        //     $update->Update(
+        //         [
+        //             'nama' => $request->nama,
+        //             'nim' => $request->nim,
+        //             'id_fakultas' => $request->fakultas,
+        //             'id_jurusan' => $request->jurusan,
+        //             'angkatan' => $request->angkatan,
+        //             'hp' => $request->hp,
+        //             'jk' => $request->jk,
+        //             'alamat' => $request->alamat,
+        //             'status' => $request->status
+        //         ]
+        //     );
+        // };
         if ($update) {
             return redirect(route('anggota'))->with('success', 'Data Berhasil diupdate');
         } else {

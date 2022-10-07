@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,4 +20,10 @@ class SuratMasuk extends Model
         'periode',
         'file_surat'
     ];
+
+    public function getTglSuratAttribute()
+    {
+        return Carbon::parse($this->attributes['tgl_surat'])
+            ->translatedFormat('d F Y');
+    }
 }

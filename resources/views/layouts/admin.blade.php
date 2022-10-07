@@ -54,61 +54,136 @@
                     <span>Dashboard</span></a>
             </li>
             <hr class="sidebar-divider my-0 py-0">
-            <!-- Anggota -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('anggota') }}">
-                    <i class="fas fa-users"></i>
-                    <span>Anggota</span></a>
-            </li>
-            <hr class="sidebar-divider my-0 py-0">
-            <!-- Pengurus -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('pengurus') }}">
-                    <i class="fas fa-user-friends"></i>
-                    <span>Pengurus</span></a>
-            </li>
-            <hr class="sidebar-divider my-0 py-0">
             <!-- user -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('users') }}">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-users"></i>
                     <span>Pengguna</span></a>
             </li>
             <hr class="sidebar-divider my-0 py-0">
-            <!-- inventaris -->
+            <!-- Database -->
             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-server"></i>
+                    <span>Database</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('anggota') }}">
+                            Anggota</a>
+                        <a class="collapse-item" href="{{ route('pengurus') }}">
+                            Pengurus</a>
+                        <a class="collapse-item" href="{{ route('inventaris') }}">
+                            Inventaris</a>
+                    </div>
+                </div>
+            </li>
+            <hr class="sidebar-divider my-0 py-0">
+            <!-- Artikel -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                    aria-expanded="true" aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-newspaper"></i>
+                    <span>Artikel</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('berita') }}">Berita</a>
+                        <a class="collapse-item" href="{{ route('galeri') }}">Galeri</a>
+                        <a class="collapse-item" href="{{ route('slider') }}">Slider</a>
+                    </div>
+                </div>
+            </li>
+            <hr class="sidebar-divider my-0 py-0">
+            <!-- Administrasi -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFor"
+                    aria-expanded="true" aria-controls="collapseFor">
+                    <i class="fas fa-fw fa-envelope"></i>
+                    <span>Administrasi</span>
+                </a>
+                <div id="collapseFor" class="collapse" aria-labelledby="headingFor"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('surat-masuk') }}">Surat Masuk</a>
+                        <a class="collapse-item" href="{{ route('surat-keluar') }}">Surat Keluar</a>
+                    </div>
+                </div>
+            </li>
+            {{-- <hr class="sidebar-divider my-0 py-0"> --}}
+            <!-- setting -->
+            {{-- <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsesetting"
+                    aria-expanded="true" aria-controls="collapsesetting">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Setting</span>
+                </a>
+                <div id="collapsesetting" class="collapse" aria-labelledby="headingsetting"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('surat-masuk') }}">Website</a>
+                        <a class="collapse-item" href="{{ route('surat-keluar') }}">Surat Keluar</a>
+                    </div>
+                </div>
+            </li> --}}
+            <!-- Anggota -->
+            {{-- <li class="nav-item">
+                <a class="nav-link" href="{{ route('anggota') }}">
+                    <i class="fas fa-users"></i>
+                    <span>Anggota</span></a>
+            </li> --}}
+            {{-- <hr class="sidebar-divider my-0 py-0"> --}}
+            <!-- Pengurus -->
+            {{-- <li class="nav-item">
+                <a class="nav-link" href="{{ route('pengurus') }}">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Pengurus</span></a>
+            </li> --}}
+            {{-- <hr class="sidebar-divider my-0 py-0"> --}}
+            <!-- user -->
+            {{-- <li class="nav-item">
+                <a class="nav-link" href="{{ route('users') }}">
+                    <i class="fas fa-user"></i>
+                    <span>Pengguna</span></a>
+            </li> --}}
+            {{-- <hr class="sidebar-divider my-0 py-0"> --}}
+            <!-- inventaris -->
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('inventaris') }}">
                     <i class="fas fa-fw fa-boxes"></i>
                     <span>Inventaris</span></a>
-            </li>
-            <hr class="sidebar-divider my-0 py-0">
+            </li> --}}
+            {{-- <hr class="sidebar-divider my-0 py-0"> --}}
             <!-- berita -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('berita') }}">
                     <i class="fas fa-fw fa-newspaper"></i>
                     <span>Berita</span></a>
-            </li>
-            <hr class="sidebar-divider my-0 py-0">
+            </li> --}}
+            {{-- <hr class="sidebar-divider my-0 py-0"> --}}
             <!-- slider -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('slider') }}">
                     <i class="fas fa-images"></i>
                     <span>Slider</span></a>
             </li>
-            <hr class="sidebar-divider my-0 py-0">
+            <hr class="sidebar-divider my-0 py-0"> --}}
             <!-- galeri -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('galeri') }}">
                     <i class="fas fa-camera"></i>
                     <span>Galeri</span></a>
-            </li>
-            <hr class="sidebar-divider my-0 py-0">
+            </li> --}}
+            {{-- <hr class="sidebar-divider my-0 py-0"> --}}
             <!-- suratmasuk -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('surat-masuk') }}">
                     <i class="fas fa-envelope"></i>
                     <span>Surat Masuk</span></a>
-            </li>
+            </li> --}}
             <hr class="sidebar-divider my-0 py-0">
             <!-- logout -->
             <li class="nav-item">
@@ -125,7 +200,7 @@
                 </form>
             </li>
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+            {{-- <hr class="sidebar-divider d-none d-md-block my-0 py-0"> --}}
 
         </ul>
         <!-- End of Sidebar -->
@@ -239,7 +314,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    {{-- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -256,7 +331,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>

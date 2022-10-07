@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\SuratMasuk;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class SuratMasukController extends Controller
 {
@@ -45,7 +46,7 @@ class SuratMasukController extends Controller
                 'perihal' => 'required|string|max:100',
                 'instansi' => 'required|string|max:50',
                 'tgl_surat' => 'required',
-                'file_surat' => 'required|file|max:1024|mimes:pdf,jpg',
+                'file_surat' => 'required|file|max:1024|mimes:jpg',
                 'periode' => 'required|string'
             ]
         );
@@ -110,7 +111,7 @@ class SuratMasukController extends Controller
                 'perihal' => 'required|string|max:100',
                 'instansi' => 'required|string|max:50',
                 'tgl_surat' => 'required',
-                'file_surat' => 'file|max:1024|mimes:pdf,jpg',
+                'file_surat' => 'file|max:1024|mimes:jpg',
                 'periode' => 'required|string'
             ]
         );
@@ -154,7 +155,16 @@ class SuratMasukController extends Controller
 
         $hapus = SuratMasuk::find($id);
         $hapus->delete();
-        File::delete('surat/surat_masuk' . $hapus->foto);
+        File::delete('assets/surat/surat_masuk' . $hapus->foto);
         return redirect()->back()->with('success', 'Data Berhasil dihapus');
+    }
+
+    public function download($id)
+    {
+        $path = public_path('public\assets\surat\surat_masuk' . $id);
+        return Response()->make($path, 200, [
+            'Content-Type' => 'image/jpeg',
+            'Content-Disposition' => 'inline; filename="' . $id . '"'
+        ]);
     }
 }
