@@ -17,7 +17,8 @@ class SuratKeluar extends Model
         'perihal',
         'tgl_surat',
         'instansi',
-        'periode'
+        'periode',
+        'file_surat'
     ];
 
     public function getTglSuratAttribute()

@@ -7,6 +7,7 @@ use App\Models\SuratKeluar;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class SuratKeluarController extends Controller
 {
@@ -47,7 +48,7 @@ class SuratKeluarController extends Controller
                 'perihal' => 'required|string|max:100',
                 'instansi' => 'required|string|max:50',
                 'tgl_surat' => 'required',
-                'file_surat' => 'required|file|max:1024|mimes:jpg',
+                'file_surat' => 'required|file|max:2048|mimes:jpg',
                 'periode' => 'required|string'
             ]
         );
@@ -112,7 +113,7 @@ class SuratKeluarController extends Controller
                 'perihal' => 'required|string|max:100',
                 'instansi' => 'required|string|max:50',
                 'tgl_surat' => 'required',
-                'file_surat' => 'file|max:1024|mimes:jpg',
+                'file_surat' => 'file|max:2048|mimes:jpg',
                 'periode' => 'required|string'
             ]
         );
@@ -162,10 +163,13 @@ class SuratKeluarController extends Controller
 
     public function download($id)
     {
-        $path = public_path('public\assets\surat\surat_keluar' . $id);
-        return Response()->make($path, 200, [
-            'Content-Type' => 'image/jpeg',
+        $path = public_path('assets/surat/surat_keluar/' . $id);
+        $filename = $id;
+        $headers = array(
+            'Content-Type: image/jpg',
             'Content-Disposition' => 'inline; filename="' . $id . '"'
-        ]);
+        );
+
+        return Response::download($path, $filename, $headers);
     }
 }

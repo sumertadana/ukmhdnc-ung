@@ -2,7 +2,7 @@
 
 @section('konten')
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Surat Keluar</h1>
+    <h1 class="h3 mb-2 text-gray-800">Format Surat</h1>
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -30,10 +30,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>No Surat</th>
-                            <th>Perihal</th>
-                            <th>Tujuan</th>
-                            <th>Tanggal</th>
+                            <th>Nama Surat</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -41,16 +38,13 @@
                         @foreach ($surat as $srt)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $srt->no_surat }}</td>
-                                <td>{{ $srt->perihal }}</td>
-                                <td>{{ $srt->instansi }}</td>
-                                <td>{{ $srt->tgl_surat }}</td>
+                                <td>{{ $srt->nama_surat }}</td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-primary shadow" data-toggle="modal"
                                         data-target="#edit{{ $srt->id }}"><i class="fa fa-edit"></i></button>
                                     <button type="button" class="btn btn-sm btn-danger shadow" data-toggle="modal"
                                         data-target="#hapus{{ $srt->id }}"><i class="fa fa-trash-alt"></i></button>
-                                    <a href="{{ route('download-surat-keluar', $srt->file_surat) }}"
+                                    <a href="{{ route('download-surat-masuk', $srt->file_surat) }}"
                                         class="btn btn-sm btn-success shadow"><i class="fas fa-download"></i></a>
                                 </td>
                             </tr>
@@ -62,7 +56,7 @@
     </div>
 
     <!-- Modal tambah data-->
-    <div class="modal fade" id="tambah" tabindex="-1" aria-hidden="true" id="staticBackdrop" data-backdrop="static"
+    {{-- <div class="modal fade" id="tambah" tabindex="-1" aria-hidden="true" id="staticBackdrop" data-backdrop="static"
         data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -74,7 +68,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" enctype="multipart/form-data" method="POST"
-                        action="{{ route('kirim-surat-keluar') }}">
+                        action="{{ route('kirim-surat-masuk') }}">
                         @csrf
                         <div class="row">
                             <div class="form-group col-sm-6">
@@ -96,10 +90,10 @@
                                 @enderror
                             </div>
                             <div class="form-group col-sm-6">
-                                <label for="instansi">Tujuan</label>
+                                <label for="instansi">Sumber</label>
                                 <input type="text" class="form-control @error('instansi') is-invalid @enderror"
-                                    id="instansi" name="instansi" placeholder="Instansi Tujuan Surat"
-                                    value="{{ old('instansi') }}" required>
+                                    id="instansi" name="instansi" placeholder="Sumber Surat" value="{{ old('instansi') }}"
+                                    required>
                                 @error('instansi')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -142,11 +136,11 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    @foreach ($surat as $srt)
-        <!-- Modal ubah data-->
-        <div class="modal fade" id="edit{{ $srt->id }}" tabindex="-1" aria-hidden="true" id="staticBackdrop"
+    {{-- @foreach ($surat as $srt) --}}
+    <!-- Modal ubah data-->
+    {{-- <div class="modal fade" id="edit{{ $srt->id }}" tabindex="-1" aria-hidden="true" id="staticBackdrop"
             data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -158,7 +152,7 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" enctype="multipart/form-data" method="POST"
-                            action="{{ route('update-surat-keluar', $srt->id) }}">
+                            action="{{ route('update-surat-masuk', $srt->id) }}">
                             @csrf
                             <div class="row">
                                 <div class="form-group col-sm-6">
@@ -180,7 +174,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label for="instansi">Tujuan</label>
+                                    <label for="instansi">Sumber</label>
                                     <input type="text" class="form-control @error('instansi') is-invalid @enderror"
                                         id="instansi" name="instansi" value="{{ $srt->instansi }}"
                                         value="{{ old('instansi') }}" required>
@@ -226,10 +220,10 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <!-- modal hapus -->
-        <div class="modal fade" id="hapus{{ $srt->id }}" tabindex="-1" aria-hidden="true" id="staticBackdrop"
+    <!-- modal hapus -->
+    {{-- <div class="modal fade" id="hapus{{ $srt->id }}" tabindex="-1" aria-hidden="true" id="staticBackdrop"
             data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -240,15 +234,15 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Apakah anda yakin akan menghapus data surat untuk {{ $srt->instansi }}</p>
+                        <p>Apakah anda yakin akan menghapus data surat dari {{ $srt->instansi }}</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <a href="{{ route('hapus-surat-keluar', $srt->id) }}" type="button"
+                        <a href="{{ route('hapus-surat-masuk', $srt->id) }}" type="button"
                             class="btn btn-danger">Hapus</a>
                     </div>
                 </div>
             </div>
-        </div>
-    @endforeach
+        </div> --}}
+    {{-- @endforeach --}}
 @endsection

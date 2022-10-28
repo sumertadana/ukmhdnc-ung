@@ -98,5 +98,8 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
 
         route::get('/surat-keluar', [SuratKeluarController::class, 'index'])->name('surat-keluar');
         route::post('/surat-keluar/kirim-surat-keluar', [SuratKeluarController::class, 'store'])->name('kirim-surat-keluar');
+        route::post('/surat-keluar/update-surat-keluar/{id}', [SuratKeluarController::class, 'update'])->name('update-surat-keluar');
+        route::get('/surat-keluar/hapus-surat-keluar/{id}', [SuratKeluarController::class, 'destroy'])->name('hapus-surat-keluar');
+        route::get('/surat-keluar/download-surat-keluar/{id}', [SuratKeluarController::class, 'download'])->name('download-surat-keluar');
     });
 });
