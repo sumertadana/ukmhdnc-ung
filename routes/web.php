@@ -11,6 +11,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\SuratKeluarController;
+use App\Http\Controllers\FormatSuratController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,5 +102,11 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         route::post('/surat-keluar/update-surat-keluar/{id}', [SuratKeluarController::class, 'update'])->name('update-surat-keluar');
         route::get('/surat-keluar/hapus-surat-keluar/{id}', [SuratKeluarController::class, 'destroy'])->name('hapus-surat-keluar');
         route::get('/surat-keluar/download-surat-keluar/{id}', [SuratKeluarController::class, 'download'])->name('download-surat-keluar');
+
+        route::get('/format-surat', [FormatSuratController::class, 'index'])->name('format-surat');
+        route::post('/kirim-format-surat', [FormatSuratController::class, 'store'])->name('kirim-format-surat');
+        route::post('/update-format-surat/{id}', [FormatSuratController::class, 'update'])->name('update-format-surat');
+        route::get('/hapus-format-surat/{id}', [FormatSuratController::class, 'destroy'])->name('hapus-format-surat');
+        route::get('/format-surat/download-format-surat/{id}', [FormatSuratController::class, 'download'])->name('download-format-surat');
     });
 });

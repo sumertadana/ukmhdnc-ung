@@ -40,7 +40,6 @@ class SuratKeluarController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $validator = Validator::make(
             $request->all(),
             [
@@ -48,7 +47,7 @@ class SuratKeluarController extends Controller
                 'perihal' => 'required|string|max:100',
                 'instansi' => 'required|string|max:50',
                 'tgl_surat' => 'required',
-                'file_surat' => 'required|file|max:2048|mimes:jpg',
+                'file_surat' => 'required|file|max:1024|mimes:jpg',
                 'periode' => 'required|string'
             ]
         );
@@ -104,8 +103,6 @@ class SuratKeluarController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        // dd($request);
         $validator = Validator::make(
             $request->all(),
             [
@@ -113,7 +110,7 @@ class SuratKeluarController extends Controller
                 'perihal' => 'required|string|max:100',
                 'instansi' => 'required|string|max:50',
                 'tgl_surat' => 'required',
-                'file_surat' => 'file|max:2048|mimes:jpg',
+                'file_surat' => 'file|max:1024|mimes:jpg',
                 'periode' => 'required|string'
             ]
         );
@@ -123,25 +120,21 @@ class SuratKeluarController extends Controller
         }
         $update = SuratKeluar::find($id);
         if ($request->hasFile('file_surat')) {
-            $filename = $request->instansi . '-' . $request->tgl_surat . '.' . $request->file_surat->extension();
+            $path = public_path('assets/surat/surat_keluar/' . $update->file_surat);
+            File::delete($path);
+
+            $filename = $request->perihal . '-' . $request->tgl_surat . '.' . $request->file_surat->extension();
             $lokasi = public_path('assets/surat/surat_keluar');
             $request->file('file_surat')->move($lokasi, $filename);
 
-            $update->no_surat = $request->no_surat;
-            $update->perihal = $request->perihal;
-            $update->instansi = $request->instansi;
-            $update->tgl_surat = $request->tgl_surat;
             $update->file_surat = $filename;
-            $update->periode = $request->periode;
-            $update->save();
-        } else {
-            $update->no_surat = $request->no_surat;
-            $update->perihal = $request->perihal;
-            $update->instansi = $request->instansi;
-            $update->tgl_surat = $request->tgl_surat;
-            $update->periode = $request->periode;
-            $update->save();
         }
+        $update->no_surat = $request->no_surat;
+        $update->perihal = $request->perihal;
+        $update->instansi = $request->instansi;
+        $update->tgl_surat = $request->tgl_surat;
+        $update->periode = $request->periode;
+        $update->save();
 
         return redirect()->back()->with('success', 'Data berhasil diupdate');
     }
@@ -154,10 +147,10 @@ class SuratKeluarController extends Controller
      */
     public function destroy($id)
     {
-
         $hapus = SuratKeluar::find($id);
+        $path = public_path('assets/surat/surat_keluar/' . $hapus->file_surat);
+        File::delete($path);
         $hapus->delete();
-        File::delete('assets/surat/surat_keluar' . $hapus->foto);
         return redirect()->back()->with('success', 'Data Berhasil dihapus');
     }
 

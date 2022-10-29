@@ -47,7 +47,7 @@ class SuratMasukController extends Controller
                 'perihal' => 'required|string|max:100',
                 'instansi' => 'required|string|max:50',
                 'tgl_surat' => 'required',
-                'file_surat' => 'required|file|max:2024|mimes:jpg',
+                'file_surat' => 'required|file|max:1024|mimes:jpg',
                 'periode' => 'required|string'
             ]
         );
@@ -122,25 +122,22 @@ class SuratMasukController extends Controller
         }
         $update = SuratMasuk::find($id);
         if ($request->hasFile('file_surat')) {
-            $filename = $request->instansi . '-' . $request->tgl_surat . '.' . $request->file_surat->extension();
+
+            $path = public_path('assets/surat/surat_masuk' . $update->file_surat);
+            File::delete($path);
+
+            $filename = $request->perihal . '-' . $request->tgl_surat . '.' . $request->file_surat->extension();
             $lokasi = public_path('assets/surat/surat_masuk');
             $request->file('file_surat')->move($lokasi, $filename);
 
-            $update->no_surat = $request->no_surat;
-            $update->perihal = $request->perihal;
-            $update->instansi = $request->instansi;
-            $update->tgl_surat = $request->tgl_surat;
             $update->file_surat = $filename;
-            $update->periode = $request->periode;
-            $update->save();
-        } else {
-            $update->no_surat = $request->no_surat;
-            $update->perihal = $request->perihal;
-            $update->instansi = $request->instansi;
-            $update->tgl_surat = $request->tgl_surat;
-            $update->periode = $request->periode;
-            $update->save();
         }
+        $update->no_surat = $request->no_surat;
+        $update->perihal = $request->perihal;
+        $update->instansi = $request->instansi;
+        $update->tgl_surat = $request->tgl_surat;
+        $update->periode = $request->periode;
+        $update->save();
 
         return redirect()->back()->with('success', 'Data berhasil diupdate');
     }
@@ -155,8 +152,9 @@ class SuratMasukController extends Controller
     {
 
         $hapus = SuratMasuk::find($id);
+        $path = public_path('assets/surat/surat_masuk' . $hapus->file_surat);
+        File::delete($path);
         $hapus->delete();
-        File::delete('assets/surat/surat_masuk' . $hapus->foto);
         return redirect()->back()->with('success', 'Data Berhasil dihapus');
     }
 

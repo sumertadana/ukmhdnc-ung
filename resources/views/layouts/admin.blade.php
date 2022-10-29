@@ -68,8 +68,7 @@
                     <i class="fas fa-fw fa-server"></i>
                     <span>Database</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('anggota') }}">
                             Anggota</a>
@@ -88,8 +87,7 @@
                     <i class="fas fa-fw fa-newspaper"></i>
                     <span>Artikel</span>
                 </a>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                    data-parent="#accordionSidebar">
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('berita') }}">Berita</a>
                         <a class="collapse-item" href="{{ route('galeri') }}">Galeri</a>
@@ -105,11 +103,11 @@
                     <i class="fas fa-fw fa-envelope"></i>
                     <span>Administrasi</span>
                 </a>
-                <div id="collapseFor" class="collapse" aria-labelledby="headingFor"
-                    data-parent="#accordionSidebar">
+                <div id="collapseFor" class="collapse" aria-labelledby="headingFor" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('surat-masuk') }}">Surat Masuk</a>
                         <a class="collapse-item" href="{{ route('surat-keluar') }}">Surat Keluar</a>
+                        <a class="collapse-item" href="{{ route('format-surat') }}">Format Surat</a>
                     </div>
                 </div>
             </li>
@@ -187,12 +185,13 @@
             <hr class="sidebar-divider my-0 py-0">
             <!-- logout -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                <a class="nav-link" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
                     <i class="fas fa-fw fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </a>
-                <a class="nav-link" href="{{ route('logout') }}">
+                <a class="nav-link" id="logout-form" href="{{ route('logout') }}">
                 </a>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -232,13 +231,14 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <form class="mb-0"
-                                    action="{{ route('update-pengguna', Auth::user()->id) }}" method="POST">
+                                <form class="mb-0" action="{{ route('update-pengguna', Auth::user()->id) }}"
+                                    method="POST">
                                     @csrf
                                     <div class="row mx-0">
                                         <div class="form-group col-sm-12">
                                             <label for="name">Nama</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                            <input type="text"
+                                                class="form-control @error('name') is-invalid @enderror"
                                                 id="name" name="name" placeholder="Masukan Nama"
                                                 value="{{ Auth::user()->name }}">
                                             @error('name')

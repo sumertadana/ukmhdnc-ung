@@ -128,7 +128,7 @@
                                     id="file_surat" name="file_surat" value="">
                                 <div id="filehelp" class="small">Format: jpg | Maks: 1MB
                                 </div>
-                                @error('surat')
+                                @error('file_surat')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -212,7 +212,7 @@
                                         id="file_surat" name="file_surat" value="">
                                     <div id="filehelp" class="small">Format: jpg | Maks: 1MB
                                     </div>
-                                    @error('surat')
+                                    @error('file_surat')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
