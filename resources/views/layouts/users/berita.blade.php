@@ -1,17 +1,17 @@
 @php
-use App\Models\Komentar;
-use App\Models\Komentar2;
+    use App\Models\Komentar;
+    use App\Models\Komentar2;
 @endphp
 <div class="card mb-3 border-0 bg-light">
     @foreach ($berita as $brt)
         <div class="row g-0 mb-4">
             <div class="col-md-4">
-                <img src="{{ asset('assets/img/berita/' . $brt->gambar) }}"
-                    class="img-fluid rounded-start mt-0 border-1" alt="{{ $brt->judul }}">
+                <img src="{{ asset('assets/img/berita/' . $brt->gambar) }}" class="img-fluid rounded-start mt-0 border-1"
+                    alt="{{ $brt->judul }}">
             </div>
             <div class="col-md-8 ">
                 <div class="card-body pt-md-0 ps-md-3 px-0">
-                    <a class="card-title fw-bold h4 mb-1 text-dark text-decoration-none text-uppercase" strong
+                    <a class="card-title fw-bold h5 mb-1 text-dark text-decoration-none text-uppercase" strong
                         href="{{ route('tampil-berita', $brt->judul) }}">{{ $brt->judul }}</a>
                     <p class="card-text text-justify mb-1 text-secondary">
                         @php

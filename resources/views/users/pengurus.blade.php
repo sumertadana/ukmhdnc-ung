@@ -1,11 +1,11 @@
-@extends('layouts.users.user')
+@extends('layouts.users')
 
 @section('konten')
     @php
-    use App\Models\Pengurus;
-    use App\Models\Bidang;
-    use App\Models\Jabatan;
-    use App\Models\Anggota;
+        use App\Models\Pengurus;
+        use App\Models\Bidang;
+        use App\Models\Jabatan;
+        use App\Models\Anggota;
     @endphp
     @foreach ($bidang as $bdg)
         <h1 class="fs-3 fw-bold text-center mb-3 mt-3">{{ $bdg->bidang }}</h1>

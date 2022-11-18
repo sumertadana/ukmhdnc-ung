@@ -1,4 +1,4 @@
-@extends('layouts.users.user')
+@extends('layouts.users')
 
 @section('konten')
     <!-- Blog entries-->
@@ -14,14 +14,10 @@
                     oleh
                     {{ $berita->penulis }}
                 </span>
-                <!-- Post categories-->
-                {{-- <a class="badge bg-warning text-decoration-none link-light me-2"
-                    href="{{ route('caribidang', $berita->bidang) }}">{{ $berita->bidang }}</a> --}}
-                {{-- <a class="badge bg-secondary text-decoration-none link-light" href="#!">Kesenian</a> --}}
             </header>
             <!-- Preview image figure-->
-            <figure class="mb-4"><img class="img-fluid rounded"
-                    src="{{ asset('assets/img/berita/' . $berita->gambar) }}" alt="..." /></figure>
+            <figure class="mb-4"><img class="img-fluid rounded" src="{{ asset('assets/img/berita/' . $berita->gambar) }}"
+                    alt="..." /></figure>
             <!-- Post content-->
             <section class="mb-3 pe-md-5">
                 <p class="fs-5 mb-4 ">
@@ -109,8 +105,7 @@
                                                                     data-bs-target="#balask2{{ $k2->id }}"
                                                                     aria-expanded="false"
                                                                     aria-controls="balas">Balas</small>
-                                                                <div class="collapse"
-                                                                    id="balask2{{ $k2->id }}">
+                                                                <div class="collapse" id="balask2{{ $k2->id }}">
                                                                     <div class="card-body">
                                                                         <form class="mb-0" method="POST"
                                                                             action="{{ route('balas-komentar') }}">

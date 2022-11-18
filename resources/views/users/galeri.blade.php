@@ -1,14 +1,15 @@
-@extends('layouts.users.user')
+@extends('layouts.users')
 
 @section('konten')
     <h1 class="fs-3 fw-bold text-center mb-4 mt-2">Galeri Kegiatan</h1>
+
+
+
     <div class="row mb-3">
         @foreach ($galeri as $glr)
-            <div class="col-md-3 col-4 col-lg-3 px-2 mb-3">
-                <button type="button" class="btn btn-sm btn-light" data-bs-toggle="modal"
+            <div class="col-md-3 col-3 col-lg-2 col-xl-2 px-2 mb-3">
+                <img src="{{ asset('assets/img/galeri/' . $glr->foto) }}" class="img-fluid rounded" data-bs-toggle="modal"
                     data-bs-target="#tampil{{ $glr->id }}">
-                    <img src="{{ asset('assets/img/galeri/' . $glr->foto) }}" class="img-fluid" alt="">
-                </button>
             </div>
         @endforeach
     </div>
@@ -19,10 +20,6 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-body p-0">
-                        {{-- <div class="ratio ratio-4x3">
-                            <iframe src="{{ asset('assets/img/galeri/' . $glr->foto) }}" title="Galeri Kegiatan"
-                                allowfullscreen></iframe>
-                        </div> --}}
                         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
