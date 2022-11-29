@@ -11,6 +11,6 @@ class Fakultas extends Model
 
     protected $table = 'fakultas';
     protected $fillable = [
-        'fakultas'
+        'fakultas', 'singkatan'
     ];
 }

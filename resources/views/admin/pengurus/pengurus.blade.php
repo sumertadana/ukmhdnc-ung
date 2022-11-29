@@ -11,7 +11,7 @@
     @endif
 
     @if (session('error'))
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
             {{ session('error') }}
             <button type="button" class="close" data-dismiss="alert">×</button>
         </div>
@@ -28,9 +28,10 @@
                 <table class="table dataTable table-bordered" id="myTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Foto</th>
-                            <th>NIM</th>
                             <th>Nama</th>
+                            <th>NIM</th>
                             <th>Bidang</th>
                             <th>Jabatan</th>
                             <th>Periode</th>
@@ -39,11 +40,12 @@
                     </thead>
                     <tbody>
                         @foreach ($pengurus as $pgr)
-                            <tr>
-                                <td class="pt-1"><img src="{{ asset('assets/img/anggota/' . $pgr->foto) }}" alt=""
-                                        width="75px"></td>
-                                <td>{{ $pgr->nim }}</td>
+                            <tr class="view">
+                                <td>{{ $loop->iteration }}</td>
+                                <td class="pt-1"><img src="{{ asset('assets/img/pengurus/' . $pgr->foto) }}"
+                                        alt="" width="75px"></td>
                                 <td>{{ $pgr->nama }}</td>
+                                <td>{{ $pgr->nim }}</td>
                                 <td>{{ $pgr->bidang }}</td>
                                 <td>{{ $pgr->jabatan }}</td>
                                 <td>{{ $pgr->periode }}</td>
@@ -82,7 +84,9 @@
                                 <input type="text" class="form-control @error('nama') is-invalid @enderror"
                                     id="nama" name="nama" placeholder="Masukan Nama" value="{{ old('nama') }}">
                                 @error('nama')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                             <div class="form-group col-sm-6">
@@ -90,7 +94,9 @@
                                 <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim"
                                     name="nim" placeholder="Masukan NIM" value="{{ old('nim') }}">
                                 @error('nim')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                             <div class="form-group col-sm-6">
@@ -103,7 +109,9 @@
                                     @endforeach
                                 </select>
                                 @error('bidang')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                             <div class="form-group col-sm-6">
@@ -113,16 +121,20 @@
                                     <option value="">--- Pilih Jabatan ---</option>
                                 </select>
                                 @error('jabatan')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="periode">Periode</label>
                                 <input type="text" class="form-control @error('periode') is-invalid @enderror"
-                                    id="periode" name="periode" placeholder="Masukan periode"
-                                    value="{{ old('periode') }}">
+                                    id="periode" name="periode" placeholder="Masukan Periode"
+                                    value="{{ old('periode') }}" required>
                                 @error('periode')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                             <div class="form-group col-sm-6">
@@ -130,7 +142,9 @@
                                 <input type="file" class="form-control @error('foto') is-invalid @enderror"
                                     id="foto" name="foto" value="">
                                 @error('foto')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                         </div>
@@ -158,7 +172,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Apakah anda yakin akan menghapus {{ $pgr->nama }} dari pengurus tahun {{ $pgr->periode }}
+                        <p>Apakah anda yakin akan menghapus {{ $pgr->nama }} dari pengurus tahun
+                            {{ $pgr->periode }}
                         </p>
                     </div>
                     <div class="modal-footer">

@@ -48,7 +48,7 @@ class FormatSuratController extends Controller
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal ditambahkan !!!');
         }
 
         $filename = $request->nama_surat . '.' . $request->file_surat->extension();
@@ -103,7 +103,7 @@ class FormatSuratController extends Controller
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal ditambahkan !!!');
         }
         $update = FormatSurat::find($id);
         if ($request->hasFile('file_surat')) {

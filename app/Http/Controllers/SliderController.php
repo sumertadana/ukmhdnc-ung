@@ -49,7 +49,7 @@ class SliderController extends Controller
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal ditambahkam !!!');
         }
 
         $filename = $request->judul . '.' . $request->gambar->extension();
@@ -100,12 +100,11 @@ class SliderController extends Controller
             [
                 'judul' => 'required|string|max:100',
                 'gambar' => 'file|image|mimes:jpg|max:2048',
-                // 'deskripsi' => 'required|string|max:100'
             ]
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal diupdate !!!');
         }
         $slider = Slider::find($id);
         if ($request->hasFile('gambar')) {

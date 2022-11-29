@@ -42,21 +42,23 @@ class GaleriController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
+                'nama' => 'required|max:50|string',
                 'foto' => 'required|file|image|mimes:jpg|max:5000',
             ]
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal ditambahkan');
         }
 
-        $filename = $request->foto->getClientOriginalName();
+        $filename = $request->nama . '-' . $request->foto->getClientOriginalName() . '.' . $request->foto->getClientOriginalExtension();
         $lokasi = public_path('assets/img/galeri');
         $request->file('foto')->move($lokasi, $filename);
 
-        $slider = new Galeri;
-        $slider->foto = $filename;
-        $slider->save();
+        $galeri = new Galeri;
+        $galeri->nama = $request->nama;
+        $galeri->foto = $filename;
+        $galeri->save();
 
         return redirect()->back()->with('success', 'Data Berhasil ditambahkan');
     }
@@ -96,20 +98,26 @@ class GaleriController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'foto' => 'required|file|image|mimes:jpg|max:5000',
+                'nama' => 'required|max:50|string',
+                'foto' => 'file|image|mimes:jpg|max:5000',
             ]
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal diupdate !!!');
         }
 
         $update = Galeri::find($id);
-        $filename = $request->foto->getClientOriginalName();
-        $lokasi = public_path('assets/img/galeri');
-        $request->file('foto')->move($lokasi, $filename);
+        if ($request->hasFile('foto')) {
+            $path = public_path('assets/galeri/');
+            File::delete($path . $update->foto);
+            $filename = $request->nama . '-' . $request->foto->getClientOriginalName() . '.' . $request->foto->getClientOriginalExtension();;
+            $lokasi = public_path('assets/img/galeri');
+            $request->file('foto')->move($lokasi, $filename);
 
-        $update->foto = $filename;
+            $update->foto = $filename;
+        }
+        $update->nama = $request->nama;
         $update->save();
 
         return redirect()->back()->with('success', 'Data Berhasil diupdate');

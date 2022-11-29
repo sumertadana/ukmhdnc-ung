@@ -28,7 +28,6 @@ use App\Http\Controllers\FormatSuratController;
 //     return view('users.index');
 // });
 Route::get('/', [PagesController::class, 'index'])->name('beranda');
-// Route::get('/pendaftaran-anggota-baru', [PagesController::class, 'daftar'])->name('daftar');
 Route::get('/berita/{id}', [BeritaController::class, 'show'])->name('tampil-berita');
 Route::get('/pengurus', [PengurusController::class, 'show'])->name('tampil-Pengurus');
 route::get('/galeri', [GaleriController::class, 'show'])->name('tampil-galeri');
@@ -55,9 +54,9 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::post('/pengurus/carijurusan', [AnggotaController::class, 'carijurusan'])->name('carijurusan');
 
         Route::get('/inventaris', [InventarisController::class, 'index'])->name('inventaris');
-        Route::post('/inventaris/kirim-inventaris', [InventarisController::class, 'store'])->name('kiriminventaris');
-        Route::post('/inventaris/update-inventaris/{id}', [InventarisController::class, 'update'])->name('updateinventaris');
-        Route::get('/inventaris/hapus-inventaris/{id}', [InventarisController::class, 'destroy'])->name('hapusinventaris');
+        Route::post('/inventaris/kirim-inventaris', [InventarisController::class, 'store'])->name('kirim-inventaris');
+        Route::post('/inventaris/update-inventaris/{id}', [InventarisController::class, 'update'])->name('update-inventaris');
+        Route::get('/inventaris/hapus-inventaris/{id}', [InventarisController::class, 'destroy'])->name('hapus-inventaris');
 
         Route::get('/pengurus', [PengurusController::class, 'index'])->name('pengurus');
         Route::get('/pengurus/tambah-pengurus', [PengurusController::class, 'create'])->name('tambah-pengurus');

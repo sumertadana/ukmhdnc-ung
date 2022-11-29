@@ -22,9 +22,9 @@ class AnggotaController extends Controller
     {
         $anggota = Anggota::join('fakultas', 'anggota.id_fakultas', '=', 'fakultas.id')
             ->join('jurusan', 'anggota.id_jurusan', '=', 'jurusan.id')
-            ->select('anggota.*', 'fakultas.fakultas', 'jurusan.jurusan')
+            ->select('anggota.*', 'fakultas.fakultas', 'fakultas.singkatan', 'jurusan.jurusan')
             ->orderByDesc('angkatan')->get();
-        $fakultas = Fakultas::select('id', 'fakultas')->get();
+        $fakultas = Fakultas::select('id', 'fakultas', 'singkatan')->get();
         return view('admin.anggota.anggota', compact('anggota', 'fakultas'));
     }
 
@@ -70,7 +70,7 @@ class AnggotaController extends Controller
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal Ditambahkan !!!');
         }
 
         $tambah = Anggota::Create(
@@ -87,13 +87,8 @@ class AnggotaController extends Controller
             ]
         );
 
-        if ($tambah) {
-            return redirect()->back()->with('success', 'Data Berhasil ditambahkan');
-        } else {
-            return redirect()->back()->with('error', 'Data Gagal ditambahkan');
-        }
+        return redirect()->back()->with('success', 'Data Berhasil ditambahkan');
     }
-
     /**
      * Display the specified resource.
      *
@@ -146,7 +141,7 @@ class AnggotaController extends Controller
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal Diupdate !!!');
         }
         $update = Anggota::find($id);
         $update->Update(
@@ -162,45 +157,8 @@ class AnggotaController extends Controller
                 'status' => $request->status
             ]
         );
-        // if ($request->hasFile('foto')) {
-        //     $filename = $request->nama . '-' . $request->nim . '.' . $request->foto->extension();
-        //     $lokasi = public_path('assets/img/anggota');
-        //     $request->file('foto')->move($lokasi, $filename);
 
-        //     $update->Update(
-        //         [
-        //             'nama' => $request->nama,
-        //             'nim' => $request->nim,
-        //             'id_fakultas' => $request->fakultas,
-        //             'id_jurusan' => $request->jurusan,
-        //             'angkatan' => $request->angkatan,
-        //             'hp' => $request->hp,
-        //             'jk' => $request->jk,
-        //             'alamat' => $request->alamat,
-        //             'status' => $request->status,
-        //             'foto' => $filename
-        //         ]
-        //     );
-        // } else {
-        //     $update->Update(
-        //         [
-        //             'nama' => $request->nama,
-        //             'nim' => $request->nim,
-        //             'id_fakultas' => $request->fakultas,
-        //             'id_jurusan' => $request->jurusan,
-        //             'angkatan' => $request->angkatan,
-        //             'hp' => $request->hp,
-        //             'jk' => $request->jk,
-        //             'alamat' => $request->alamat,
-        //             'status' => $request->status
-        //         ]
-        //     );
-        // };
-        if ($update) {
-            return redirect(route('anggota'))->with('success', 'Data Berhasil diupdate');
-        } else {
-            return redirect()->back()->with('error', 'Data Gagal diupdate');
-        }
+        return redirect(route('anggota'))->with('success', 'Data Berhasil diupdate');
     }
 
     /**
@@ -211,13 +169,13 @@ class AnggotaController extends Controller
      */
     public function destroy($id)
     {
-        $hapus = Anggota::find($id);
-        $pengurus = Pengurus::where('nim', $hapus->nim)->first();
+        $anggota = Anggota::find($id);
+        $pengurus = Pengurus::where('nim', $anggota->nim)->first();
         if (isset($pengurus)) {
+            File::delete('assets/img/pengurus' . $pengurus->foto);
             $pengurus->delete();
         };
-        $hapus->delete();
-        File::delete('assets/img/anggota' . $hapus->foto);
+        $anggota->delete();
         return redirect()->back()->with('success', 'Data Berhasil dihapus');
     }
 }

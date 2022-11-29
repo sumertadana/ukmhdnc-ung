@@ -11,7 +11,7 @@
     @endif
 
     @if (session('error'))
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
             {{ session('error') }}
             <button type="button" class="close" data-dismiss="alert">×</button>
         </div>
@@ -36,7 +36,7 @@
                     </thead>
                     <tbody>
                         @foreach ($surat as $srt)
-                            <tr>
+                            <tr class="view">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $srt->nama_surat }}</td>
                                 <td>
@@ -72,22 +72,25 @@
                         @csrf
                         <div class="row">
                             <div class="form-group col-12">
-                                <label for="no_surat">Nama Surat</label>
+                                <label for="nama_surat">Nama Surat</label>
                                 <input type="text" class="form-control @error('nama_surat') is-invalid @enderror"
-                                    id="no_surat" name="nama_surat" placeholder="Nama Surat"
+                                    id="nama_surat" name="nama_surat" placeholder="Nama Surat"
                                     value="{{ old('nama_surat') }}" required>
                                 @error('nama_surat')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }} <button type="button" class="close"
+                                            data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                             <div class="form-group col-12">
                                 <label for="file_surat">File Surat</label>
                                 <input type="file" class="form-control @error('file_surat') is-invalid @enderror"
                                     id="file_surat" name="file_surat" value="">
-                                <div id="filehelp" class="small">Format: .docx | Maks: 10MB
-                                </div>
+                                <small class="text-muted small">docx | 10MB</small>
                                 @error('file_surat')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }} <button type="button" class="close"
+                                            data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                         </div>
@@ -125,17 +128,20 @@
                                         id="no_surat" name="nama_surat" placeholder="Nama Surat"
                                         value="{{ $srt->nama_surat }}" required>
                                     @error('nama_surat')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <div class="alert alert-danger">{{ $message }} <button type="button"
+                                                class="close" data-dismiss="alert">×</button>
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group col-12">
                                     <label for="file_surat">File Surat</label>
                                     <input type="file" class="form-control @error('file_surat') is-invalid @enderror"
                                         id="file_surat" name="file_surat" value="">
-                                    <div id="filehelp" class="small">kosongkan jika tidak mengubah file
-                                    </div>
+                                    <small class="text-muted small">kosongkan jika tidak ingin mengubah file</small>
                                     @error('file_surat')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <div class="alert alert-danger">{{ $message }} <button type="button"
+                                                class="close" data-dismiss="alert">×</button>
+                                        </div>
                                     @enderror
                                 </div>
                             </div>

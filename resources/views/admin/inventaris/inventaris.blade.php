@@ -11,7 +11,7 @@
     @endif
 
     @if (session('error'))
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
             {{ session('error') }}
             <button type="button" class="close" data-dismiss="alert">×</button>
         </div>
@@ -21,7 +21,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <button type="button" class="btn btn-primary shadow" data-toggle="modal" data-target="#tambah">Tambah
-                Data</button>
+                <i class="far fa-plus-square"></i></button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -30,7 +30,6 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Kode</th>
                             <th>Jumlah</th>
                             <th>Kondisi</th>
                             <th>Aksi</th>
@@ -38,10 +37,9 @@
                     </thead>
                     <tbody>
                         @foreach ($inventaris as $inv)
-                            <tr>
+                            <tr class="view">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $inv->nama }}</td>
-                                <td>{{ $inv->kode }}</td>
                                 <td>{{ $inv->jumlah }}</td>
                                 <td>{{ $inv->kondisi }}</td>
                                 <td>
@@ -71,23 +69,30 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" enctype="multipart/form-data" method="POST"
-                        action="{{ route('kiriminventaris') }}">
+                        action="{{ route('kirim-inventaris') }}">
                         @csrf
                         <div class="row">
                             <div class="form-group col-sm-12">
                                 <label for="nama">Nama</label>
-                                <input type="text" class="form-control required" id="nama" name="nama"
-                                    placeholder="Masukan Nama" value="" minlength="2" required="">
-                            </div>
-                            <div class="form-group col-sm-12">
-                                <label for="kode">Kode</label>
-                                <input type="text" class="form-control required" id="kode" name="kode"
-                                    placeholder="Masukan Kode" value="" minlength="2" required="">
+                                <input type="text" class="form-control required @error('nama') is-invalid @enderror"
+                                    id="nama" name="nama" placeholder="Masukan Nama Barang" value=""
+                                    minlength="2" required="">
+                                @error('nama')
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
+                                @enderror
                             </div>
                             <div class="form-group col-sm-12">
                                 <label for="jumlah">Jumlah</label>
-                                <input type="text" class="form-control required" id="jumlah" name="jumlah"
-                                    placeholder="Masukan Jumlah" value="" minlength="2" required="">
+                                <input type="text" class="form-control required @error('jumlah') is-invalid @enderror"
+                                    id="jumlah" name="jumlah" placeholder="Masukan Jumlah" value="" minlength="2"
+                                    required="">
+                                @error('jumlah')
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
+                                @enderror
                             </div>
                             <div class="form-group col-sm-12">
                                 <label for="kondisi">Kondisi</label>
@@ -123,23 +128,30 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" enctype="multipart/form-data" method="POST"
-                            action="{{ route('updateinventaris', $inv->id) }}">
+                            action="{{ route('update-inventaris', $inv->id) }}">
                             @csrf
                             <div class="row">
                                 <div class="form-group col-sm-12">
                                     <label for="nama">Nama</label>
-                                    <input type="text" class="form-control required" id="nama" name="nama"
-                                        value="{{ $inv->nama }}" minlength="2" required="">
-                                </div>
-                                <div class="form-group col-sm-12">
-                                    <label for="kode">Kode</label>
-                                    <input type="text" class="form-control required" id="kode" name="kode"
-                                        value="{{ $inv->kode }}" minlength="2" required="">
+                                    <input type="text"
+                                        class="form-control required  @error('nama') is-invalid @enderror" id="nama"
+                                        name="nama" value="{{ $inv->nama }}" minlength="2" required="">
+                                    @error('nama')
+                                        <div class="alert alert-danger">{{ $message }}
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <label for="jumlah">Jumlah</label>
-                                    <input type="text" class="form-control required" id="jumlah" name="jumlah"
-                                        value="{{ $inv->jumlah }}" minlength="2" required="">
+                                    <input type="text"
+                                        class="form-control required @error('jumlah') is-invalid @enderror" id="jumlah"
+                                        name="jumlah" value="{{ $inv->jumlah }}" minlength="2" required="">
+                                    @error('jumlah')
+                                        <div class="alert alert-danger">{{ $message }}
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <label for="kondisi">Kondisi</label>
@@ -178,7 +190,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <a href="{{ route('hapusinventaris', $inv->id) }}" type="button" class="btn btn-danger">Hapus</a>
+                        <a href="{{ route('hapus-inventaris', $inv->id) }}" type="button"
+                            class="btn btn-danger">Hapus</a>
                     </div>
                 </div>
             </div>

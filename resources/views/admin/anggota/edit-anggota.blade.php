@@ -11,7 +11,7 @@
     @endif
 
     @if (session('error'))
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
             {{ session('error') }}
             <button type="button" class="close" data-dismiss="alert">×</button>
         </div>
@@ -28,7 +28,7 @@
                         <label for="nama">Nama</label>
                         <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama"
                             name="nama" placeholder="Masukan Nama" value="{{ $anggota->nama }}"
-                            value="{{ old('nama') }}">
+                            value="{{ old('nama') }}" required maxlength="100">
                         @error('nama')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -36,15 +36,16 @@
                     <div class="form-group col-sm-6">
                         <label for="nim">NIM</label>
                         <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim"
-                            name="nim" placeholder="Masukan NIM" value="{{ $anggota->nim }}"
-                            value="{{ old('nim') }}">
+                            name="nim" placeholder="Masukan NIM" value="{{ $anggota->nim }}" value="{{ old('nim') }}"
+                            required maxlength="9" minlength="9">
                         @error('nim')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="fakultas">Fakultas</label>
-                        <select name="fakultas" id="fakultas" class="form-control @error('fakultas') is-invalid @enderror">
+                        <select name="fakultas" id="fakultas" class="form-control @error('fakultas') is-invalid @enderror"
+                            required>
                             <option value="{{ $anggota->id_fakultas }}" hidden>{{ $anggota->fakultas }}</option>
                             @foreach ($fakultas as $fk)
                                 <option value="{{ $fk->id }}">{{ $fk->fakultas }}</option>
@@ -56,7 +57,8 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="jurusan">Jurusan</label>
-                        <select name="jurusan" id="jurusan" class="form-control  @error('jurusan') is-invalid @enderror">
+                        <select name="jurusan" id="jurusan" class="form-control  @error('jurusan') is-invalid @enderror"
+                            required>
                             <option value="{{ $anggota->id_jurusan }}" hidden>{{ $anggota->jurusan }}</option>
                         </select>
                         @error('jurusan')
@@ -67,7 +69,7 @@
                         <label for="angkatan">Angkatan</label>
                         <input type="text" class="form-control @error('angkatan') is-invalid @enderror" id="angkatan"
                             name="angkatan" placeholder="Masukan Angkatan" value="{{ $anggota->angkatan }}"
-                            value="{{ old('angkatan') }}">
+                            value="{{ old('angkatan') }}" required minlength="4" maxlength="4">
                         @error('angkatan')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -76,14 +78,15 @@
                         <label for="hp">No Hp</label>
                         <input type="text" class="form-control @error('hp') is-invalid @enderror" id="hp"
                             name="hp" placeholder="Masukan No Hp" value="{{ $anggota->hp }}"
-                            value="{{ old('hp') }}">
+                            value="{{ old('hp') }}" maxlength="14">
                         @error('hp')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="jk">Jenis Kelamin</label>
-                        <select name="jk" id="jk" class="form-control @error('jk') is-invalid @enderror">
+                        <select name="jk" id="jk" class="form-control @error('jk') is-invalid @enderror"
+                            required>
                             <option value="{{ $anggota->jk }}" hidden>
                                 @if ($anggota->jk = 'L')
                                     Laki-Laki
@@ -102,14 +105,15 @@
                         <label for="alamat">Alamat</label>
                         <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat"
                             name="alamat" placeholder="Masukan Alamat" value="{{ $anggota->alamat }}"
-                            value="{{ old('alamat') }}">
+                            value="{{ old('alamat') }}" required>
                         @error('alamat')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="status">Status Anggota</label>
-                        <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
+                        <select name="status" id="status" class="form-control @error('status') is-invalid @enderror"
+                            required>
                             <option value="{{ $anggota->status }}" hidden>
                                 @if ($anggota->status = 0)
                                     Anggota Biasa
@@ -129,7 +133,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-primary" value="create">Simpan</button>
+            <button type="submit" class="btn btn-primary" value="create">Update</button>
         </div>
         </form>
     </div>

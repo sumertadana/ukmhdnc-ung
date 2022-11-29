@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Inventaris;
+use Illuminate\Support\Facades\Validator;
 
 class InventarisController extends Controller
 {
@@ -36,10 +37,22 @@ class InventarisController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nama' => 'required|string|max:100',
+                'jumlah' => 'required|string|min:1|max:5',
+                'kondisi' => 'required|string'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal Diupdate !!!');
+        }
+
         $tambah = Inventaris::Create(
             [
                 'nama' => $request->nama,
-                'kode' => $request->kode,
                 'jumlah' => $request->jumlah,
                 'kondisi' => $request->kondisi,
             ]
@@ -82,11 +95,22 @@ class InventarisController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nama' => 'required|string|max:100',
+                'jumlah' => 'required|string|min:1|max:5',
+                'kondisi' => 'required|string'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal Diupdate !!!');
+        }
         $update = Inventaris::find($id);
         $update->update([
 
             'nama' => $request->nama,
-            'kode' => $request->kode,
             'jumlah' => $request->jumlah,
             'kondisi' => $request->kondisi,
         ]);

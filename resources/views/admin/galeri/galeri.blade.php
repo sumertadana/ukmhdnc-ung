@@ -11,7 +11,7 @@
     @endif
 
     @if (session('error'))
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
             {{ session('error') }}
             <button type="button" class="close" data-dismiss="alert">×</button>
         </div>
@@ -36,17 +36,17 @@
                     </thead>
                     <tbody>
                         @foreach ($galeri as $glr)
-                            <tr>
+                            <tr class="view">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>
                                     <img src="{{ asset('assets/img/galeri/' . $glr->foto) }}" alt="" height="100px"
                                         class="">
                                 </td>
-                                <td>{{ $glr->foto }}</td>
+                                <td>{{ $glr->nama }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary shadow" data-toggle="modal"
+                                    <button type="button" class="btn btn-sm btn-primary shadow" data-toggle="modal"
                                         data-target="#edit{{ $glr->id }}"><i class="fa fa-edit"></i></button>
-                                    <button type="button" class="btn btn-danger shadow" data-toggle="modal"
+                                    <button type="button" class="btn btn-sm btn-danger shadow" data-toggle="modal"
                                         data-target="#hapus{{ $glr->id }}"><i class="fa fa-trash-alt"></i></button>
                                 </td>
                             </tr>
@@ -75,12 +75,24 @@
                         @csrf
                         <div class="row">
                             <div class="form-group col-sm-12">
+                                <label for="nama">Nama Gambar</label>
+                                <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                                    id="nama" name="nama" placeholder="Nama Gambar" value="{{ old('nama') }}">
+                                @error('nama')
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-sm-12">
                                 <label for="foto">Foto</label>
                                 <input type="file" class="form-control required" id="foto" name="foto"
                                     placeholder="Masukan foto" value="">
                                 <small class="text-muted">Format: JPG | Maks: 5MB</small>
                                 @error('foto')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                         </div>
@@ -111,6 +123,17 @@
                             action="{{ route('update-galeri', $glr->id) }}">
                             @csrf
                             <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="nama">Nama Gambar</label>
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                                        id="nama" name="nama" placeholder="Nama Gambar"
+                                        value="{{ $glr->nama }}" value="{{ old('nama') }}">
+                                    @error('nama')
+                                        <div class="alert alert-danger">{{ $message }}
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                        </div>
+                                    @enderror
+                                </div>
                                 <div class="col-sm-12">
                                     <img src="{{ asset('assets/img/galeri/' . $glr->foto) }}" alt=""
                                         class="img-fluid">
@@ -122,7 +145,9 @@
                                     <small class="text-muted">Format: JPG | Maks: 5MB | Kosongkan jika tidak ingin
                                         mengubah foto</small>
                                     @error('foto')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <div class="alert alert-danger">{{ $message }}
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                        </div>
                                     @enderror
                                 </div>
 

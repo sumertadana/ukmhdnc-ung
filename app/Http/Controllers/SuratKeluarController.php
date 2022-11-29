@@ -48,12 +48,12 @@ class SuratKeluarController extends Controller
                 'instansi' => 'required|string|max:50',
                 'tgl_surat' => 'required',
                 'file_surat' => 'required|file|max:1024|mimes:jpg',
-                'periode' => 'required|string'
+                'periode' => 'required|string|max:9|min:9'
             ]
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal ditambahkan');
         }
 
         $filename = $request->instansi . '-' . $request->tgl_surat . '.' . $request->file_surat->extension();
@@ -111,12 +111,12 @@ class SuratKeluarController extends Controller
                 'instansi' => 'required|string|max:50',
                 'tgl_surat' => 'required',
                 'file_surat' => 'file|max:1024|mimes:jpg',
-                'periode' => 'required|string'
+                'periode' => 'required|string|max:9|min:9'
             ]
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal diupdate');
         }
         $update = SuratKeluar::find($id);
         if ($request->hasFile('file_surat')) {

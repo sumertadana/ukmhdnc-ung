@@ -2,7 +2,7 @@
 
 @section('konten')
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Pengurus</h1>
+    <h1 class="h3 mb-2 text-gray-800">Edit Data Pengurus</h1>
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -11,7 +11,7 @@
     @endif
 
     @if (session('error'))
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
             {{ session('error') }}
             <button type="button" class="close" data-dismiss="alert">×</button>
         </div>
@@ -26,18 +26,22 @@
                 <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="nama">Nama</label>
-                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"
-                            value="{{ $pengurus->nama }}" value="{{ old('nama') }}">
+                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama"
+                            name="nama" value="{{ $pengurus->nama }}" value="{{ old('nama') }}">
                         @error('nama')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert alert-danger">{{ $message }}
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                            </div>
                         @enderror
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="nim">NIM</label>
-                        <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim" name="nim"
-                            value="{{ $pengurus->nim }}" value="{{ old('nim') }}">
+                        <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim"
+                            name="nim" value="{{ $pengurus->nim }}" value="{{ old('nim') }}">
                         @error('nim')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert alert-danger">{{ $message }}
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                            </div>
                         @enderror
                     </div>
                     <div class="form-group col-sm-6">
@@ -49,7 +53,9 @@
                             @endforeach
                         </select>
                         @error('bidang')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert alert-danger">{{ $message }}
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                            </div>
                         @enderror
                     </div>
                     <div class="form-group col-sm-6">
@@ -58,31 +64,47 @@
                             <option value="{{ $pengurus->id_jabatan }}" hidden>{{ $pengurus->jabatan }}</option>
                         </select>
                         @error('jabatan')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert alert-danger">{{ $message }}
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                            </div>
                         @enderror
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="periode">Periode</label>
                         <input type="text" class="form-control @error('periode') is-invalid @enderror" id="periode"
-                            name="periode" value="{{ $pengurus->periode }}" value="{{ old('periode') }}">
+                            name="periode" placeholder="Masukan Periode" value="{{ $pengurus->periode }}"
+                            value="{{ old('periode') }}" required>
                         @error('periode')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert alert-danger">{{ $message }}
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                            </div>
                         @enderror
                     </div>
-                    {{-- <div class="form-group col-sm-6">
-                        <label for="foto">Foto</label>
-                        <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto"
-                            value="">
+                    <div class="form-group col-sm-6 row">
+                        <div class="col-9">
+                            <label for="foto">Foto</label>
+                            <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto"
+                                name="foto" value="">
+                            <small class="mb-0">kosongkan jika tidak ingin mengubah foto</small>
+                        </div>
+                        <div class="col-3">
+                            <img class="img" src="{{ asset('assets/img/pengurus/' . $pengurus->foto) }}" height="90"
+                                alt="">
+                        </div>
                         @error('foto')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert alert-danger">{{ $message }}
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                            </div>
                         @enderror
-                    </div> --}}
+                    </div>
                 </div>
 
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-primary" value="create">Simpan</button>
+        <div class="card-footer">
+            <div class="float-right">
+                <a href="{{ route('pengurus') }}" class="btn btn-secondary">Batal</a>
+                <button type="submit" class="btn btn-primary" value="create">Simpan</button>
+            </div>
         </div>
         </form>
     </div>

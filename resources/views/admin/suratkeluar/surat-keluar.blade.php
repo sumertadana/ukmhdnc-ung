@@ -11,7 +11,7 @@
     @endif
 
     @if (session('error'))
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
             {{ session('error') }}
             <button type="button" class="close" data-dismiss="alert">×</button>
         </div>
@@ -39,7 +39,7 @@
                     </thead>
                     <tbody>
                         @foreach ($surat as $srt)
-                            <tr>
+                            <tr class="view">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $srt->no_surat }}</td>
                                 <td>{{ $srt->perihal }}</td>
@@ -83,7 +83,9 @@
                                     id="no_surat" name="no_surat" placeholder="Nomor Surat" value="{{ old('no_surat') }}"
                                     required>
                                 @error('no_surat')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                             <div class="form-group col-sm-6">
@@ -92,7 +94,9 @@
                                     id="perihal" name="perihal" placeholder="Perihal" value="{{ old('perihal') }}"
                                     required>
                                 @error('perihal')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                             <div class="form-group col-sm-6">
@@ -101,7 +105,9 @@
                                     id="instansi" name="instansi" placeholder="Instansi Tujuan Surat"
                                     value="{{ old('instansi') }}" required>
                                 @error('instansi')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                             <div class="form-group col-sm-6">
@@ -110,7 +116,9 @@
                                     id="tgl_surat" name="tgl_surat" placeholder="Masukan Tanggal Surat"
                                     value="{{ old('tgl_surat') }}" required>
                                 @error('tgl_surat')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                             <div class="form-group col-sm-6">
@@ -119,7 +127,9 @@
                                     id="periode" name="periode" placeholder="Masukan Periode"
                                     value="{{ old('periode') }}" required>
                                 @error('periode')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                             <div class="form-group col-sm-6">
@@ -129,7 +139,9 @@
                                 <div id="filehelp" class="small">Format: jpg | Maks: 1MB
                                 </div>
                                 @error('file_surat')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger">{{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert">×</button>
+                                    </div>
                                 @enderror
                             </div>
                         </div>
@@ -167,7 +179,9 @@
                                         id="no_surat" name="no_surat" value="{{ $srt->no_surat }}"
                                         value="{{ old('no_surat') }}" required>
                                     @error('no_surat')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <div class="alert alert-danger">{{ $message }}
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group col-sm-6">
@@ -176,7 +190,9 @@
                                         id="perihal" name="perihal" value="{{ $srt->perihal }}"
                                         value="{{ old('perihal') }}" required>
                                     @error('perihal')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <div class="alert alert-danger">{{ $message }}
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group col-sm-6">
@@ -185,7 +201,9 @@
                                         id="instansi" name="instansi" value="{{ $srt->instansi }}"
                                         value="{{ old('instansi') }}" required>
                                     @error('instansi')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <div class="alert alert-danger">{{ $message }}
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group col-sm-6">
@@ -194,7 +212,9 @@
                                         id="tgl_surat" name="tgl_surat" value="{{ $srt->tgl_surat }}"
                                         value="{{ old('tgl_surat') }}" required>
                                     @error('tgl_surat')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <div class="alert alert-danger">{{ $message }}
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group col-sm-6">
@@ -203,7 +223,9 @@
                                         id="periode" name="periode" value="{{ $srt->periode }}"
                                         value="{{ old('periode') }}" required>
                                     @error('periode')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <div class="alert alert-danger">{{ $message }}
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group col-sm-6">
@@ -213,7 +235,9 @@
                                     <div id="filehelp" class="small">Format: jpg | Maks: 1MB
                                     </div>
                                     @error('file_surat')
-                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        <div class="alert alert-danger">{{ $message }}
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                        </div>
                                     @enderror
                                 </div>
                             </div>

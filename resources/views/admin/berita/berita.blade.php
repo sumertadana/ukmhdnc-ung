@@ -11,7 +11,7 @@
     @endif
 
     @if (session('error'))
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
             {{ session('error') }}
             <button type="button" class="close" data-dismiss="alert">×</button>
         </div>
@@ -39,7 +39,7 @@
                     </thead>
                     <tbody>
                         @foreach ($berita as $brt)
-                            <tr>
+                            <tr class="view">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $brt->judul }}</td>
                                 <td>{{ $brt->penulis }}</td>

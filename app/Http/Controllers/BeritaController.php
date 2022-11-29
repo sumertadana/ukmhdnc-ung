@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Berita;
 use App\Models\Bidang;
 use App\Models\Komentar;
@@ -45,7 +46,21 @@ class BeritaController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'judul' => 'required|string|max:100',
+                'deskripsi' => 'required|string|min:50',
+                'gambar' => 'required|file|image|mimes:jpg|max:2048',
+                'id_bidang' => 'required|string',
+                'penulis' => 'required|string|max:50'
+            ]
+        );
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal Ditambahkan !!!');
+        }
+
         $filename = $request->judul . '.' . $request->gambar->extension();
         $lokasi = public_path('assets/img/berita');
         $request->file('gambar')->move($lokasi, $filename);
@@ -63,7 +78,7 @@ class BeritaController extends Controller
         if ($tambah) {
             return redirect(route('berita'))->with('success', 'Data Berhasil ditambahkan');
         } else {
-            return redirect()->back()->with('error', 'Data Gagal ditambahkan');
+            return redirect()->back()->with('error', 'Data Gagal ditambahkan !!!');
         }
     }
 
@@ -75,7 +90,6 @@ class BeritaController extends Controller
      */
     public function show($id)
     {
-        // $berita = Berita::where('judul', $id)->first();
         $berita = Berita::join('bidang', 'berita.id_bidang', '=', 'bidang.id')
             ->select('berita.*', 'bidang.bidang')
             ->where('berita.judul', '=', $id)
@@ -94,7 +108,6 @@ class BeritaController extends Controller
      */
     public function edit($id)
     {
-        // $edit = Berita::findorfail($id);
         $edit = Berita::join('bidang', 'berita.id_bidang', '=', 'bidang.id')
             ->select('berita.*', 'bidang.bidang')
             ->where('berita.id', '=', $id)
@@ -112,6 +125,20 @@ class BeritaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'judul' => 'required|string|max:100',
+                'deskripsi' => 'required|string|min:50',
+                'gambar' => 'file|image|mimes:jpg|max:2048',
+                'id_bidang' => 'required|string',
+                'penulis' => 'required|string|max:50'
+            ]
+        );
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal Ditambahkan !!!');
+        }
+
         $update = Berita::find($id);
         if ($request->hasFile('gambar')) {
             $lokasi = public_path('assets/img/berita/');

@@ -25,7 +25,7 @@ class PengurusController extends Controller
             ->join('anggota', 'pengurus.nim', '=', 'anggota.nim')
             ->join('bidang', 'pengurus.id_bidang', '=', 'bidang.id')
             ->join('jabatan', 'pengurus.id_jabatan', '=', 'jabatan.id')
-            ->select('pengurus.*', 'anggota.nama', 'anggota.foto', 'bidang.bidang', 'jabatan.jabatan')
+            ->select('pengurus.*', 'anggota.nama', 'bidang.bidang', 'jabatan.jabatan')
             ->get();
         $bidang = Bidang::select('id', 'bidang')->get();
         return view('admin.pengurus.pengurus', compact('pengurus', 'bidang'));
@@ -74,7 +74,7 @@ class PengurusController extends Controller
             [
                 'nama' => 'required|string|max:100',
                 'nim' => 'required|string|min:9|max:9',
-                'periode' => 'required|string|max:4|min:4',
+                'periode' => 'required|string|max:9|min:9',
                 'foto' => 'required|file|image|mimes:jpg|max:1024',
                 'bidang' => 'required|string',
                 'jabatan' => 'required|string'
@@ -82,11 +82,11 @@ class PengurusController extends Controller
         );
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal Ditambahkan !!!');
         }
 
         $filename = $request->nama . '.' . $request->foto->extension();
-        $lokasi = public_path('assets/img/anggota');
+        $lokasi = public_path('assets/img/pengurus');
         $request->file('foto')->move($lokasi, $filename);
 
         $tambah = Pengurus::Create(
@@ -98,11 +98,7 @@ class PengurusController extends Controller
                 'foto' => $filename
             ]
         );
-        if ($tambah) {
-            return redirect()->back()->with('success', 'Data Berhasil ditambahkan');
-        } else {
-            return redirect()->back()->with('error', 'Data Gagal ditambahkan');
-        }
+        return redirect()->back()->with('success', 'Data Berhasil ditambahkan');
     }
 
     /**
@@ -152,21 +148,20 @@ class PengurusController extends Controller
             [
                 'nama' => 'required|string|max:100',
                 'nim' => 'required|string|min:9|max:9',
-                'periode' => 'required|string|max:4|min:4',
+                'periode' => 'required|string|max:9|min:9',
                 'foto' => 'file|image|mimes:jpg|max:1024',
                 'bidang' => 'required|string',
                 'jabatan' => 'required|string'
             ]
         );
-
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal Diupdate !!!');
         }
 
         $update = Pengurus::find($id);
         if ($request->hasFile('foto')) {
-            $filename = $request->nama . '.' . $request->foto->extension();
-            $lokasi = public_path('assets/img/anggota/');
+            $filename = $request->nama . $request->nim . '.' . $request->foto->extension();
+            $lokasi = public_path('assets/img/pengurus/');
             File::delete($lokasi . $update->foto);
             $request->file('foto')->move($lokasi, $filename);
 
@@ -190,11 +185,7 @@ class PengurusController extends Controller
             );
         }
 
-        if ($update) {
-            return redirect(route('pengurus'))->with('success', 'Data Berhasil diupdate');
-        } else {
-            return redirect()->back()->with('error', 'Data Gagal diupdate');
-        }
+        return redirect(route('pengurus'))->with('success', 'Data Berhasil diupdate');
     }
 
     /**
@@ -205,14 +196,11 @@ class PengurusController extends Controller
      */
     public function destroy($id)
     {
-        $hapus = Pengurus::find($id);
-        File::delete('assets/img/pengurus' . $hapus->foto);
-        $hapus->delete();
+        $pengurus = Pengurus::find($id);
+        $path = public_path('assets/img/pengurus');
+        File::delete($path . $pengurus->foto);
+        $pengurus->delete();
 
-        if ($hapus) {
-            return redirect()->back()->with('success', 'Data berhasil dihapus');
-        } else {
-            return redirect()->back()->with('error', 'Data gagal dihapus');
-        }
+        return redirect()->back()->with('success', 'Data berhasil dihapus');
     }
 }
