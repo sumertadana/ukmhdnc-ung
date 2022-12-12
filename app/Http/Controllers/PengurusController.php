@@ -85,7 +85,7 @@ class PengurusController extends Controller
             return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal Ditambahkan !!!');
         }
 
-        $filename = $request->nama . '.' . $request->foto->extension();
+        $filename = $request->nama . $request->nim . '.' . $request->foto->extension();
         $lokasi = public_path('assets/img/pengurus');
         $request->file('foto')->move($lokasi, $filename);
 

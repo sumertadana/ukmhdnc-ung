@@ -182,12 +182,12 @@ class BeritaController extends Controller
     public function destroy($id)
     {
         $delete = Berita::find($id);
-        $komentar1 = Komentar::where('id_berita', $id)->get();
-        $komentar2 = Komentar2::where('id_berita', $id)->get();
+        $komentar1 = Komentar::where('id_berita', $id)->delete();
+        $komentar2 = Komentar2::where('id_berita', $id)->delete();
         $lokasi = public_path('assets/img/berita/' . $delete->gambar);
         File::delete($lokasi);
-        $komentar1->delete();
-        $komentar2->delete();
+        // $komentar1->delete();
+        // $komentar2->delete();
         $delete->delete();
 
         return redirect()->back()->with('success', 'Berita Berhasil dihapus');

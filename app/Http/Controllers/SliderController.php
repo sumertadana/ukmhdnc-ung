@@ -129,7 +129,7 @@ class SliderController extends Controller
     public function destroy($id)
     {
         $hapus = Slider::find($id);
-        File::delete('assets/img/pengurus' . $hapus->gambar);
+        File::delete('assets/img/slider' . $hapus->gambar);
         $hapus->delete();
 
         if ($hapus) {
