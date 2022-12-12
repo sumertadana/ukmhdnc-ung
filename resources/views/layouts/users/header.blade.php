@@ -1,4 +1,4 @@
-<header class=" bg-white mb-md-3 ">
+<header class=" mb-0 ">
     @php
         use App\Models\Slider;
         $slider = Slider::all();

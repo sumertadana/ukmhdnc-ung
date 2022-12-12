@@ -12,7 +12,7 @@
         @php
             $anggota = Pengurus::join('anggota', 'pengurus.nim', 'anggota.nim')
                 ->join('jabatan', 'pengurus.id_jabatan', 'jabatan.id')
-                ->select('anggota.nama', 'anggota.foto', 'jabatan.jabatan')
+                ->select('anggota.nama', 'pengurus.foto', 'jabatan.jabatan')
                 ->where('pengurus.id_bidang', $bdg->id)
                 ->get();
         @endphp
@@ -20,7 +20,7 @@
             @foreach ($anggota as $agt)
                 <div class="col-6 col-md-4 col-lg-3 px-0 my-1">
                     <div class="card mx-2 shadow">
-                        <img src="{{ asset('assets/img/anggota/' . $agt->foto) }}" class="card-img-top img-fluid"
+                        <img src="{{ asset('assets/img/pengurus/' . $agt->foto) }}" class="card-img-top img-fluid"
                             alt="{{ $agt->foto }}">
                         <div class="card-body pt-2">
                             <h1 class="card-title fs-5 text-center fw-bold">{{ $agt->jabatan }}</h1>
