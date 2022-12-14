@@ -1,10 +1,19 @@
 @php
     use App\Models\Pengurus;
-    // $sidepengurus = Pengurus::all();
+
+    if (Pengurus::count() < 1) {
+        $periodepilihan = 'kosong';
+    } else {
+        $periodeterbaru = Pengurus::select('periode')
+            ->groupBy('periode')
+            ->latest()
+            ->first();
+        $periodepilihan = $periodeterbaru->periode;
+    }
     $sidepengurus = Pengurus::join('anggota', 'pengurus.nim', 'anggota.nim')
         ->join('jabatan', 'pengurus.id_jabatan', 'jabatan.id')
-        ->select('anggota.nama', 'pengurus.foto', 'jabatan.jabatan')
-        // ->where('pengurus.id_bidang', $bdg->id)
+        ->select('anggota.nama', 'pengurus.foto', 'pengurus.periode', 'jabatan.jabatan')
+        ->where('pengurus.periode', $periodepilihan)
         ->get();
 @endphp
 <div class="card border-0">
