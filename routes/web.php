@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::get('/inventaris/hapus-inventaris/{id}', [InventarisController::class, 'destroy'])->name('hapus-inventaris');
 
         Route::get('/pengurus', [PengurusController::class, 'index'])->name('pengurus');
+        Route::get('/pengurus/{id}', [PengurusController::class, 'periodepengurus'])->name('periode-pengurus');
         Route::get('/pengurus/tambah-pengurus', [PengurusController::class, 'create'])->name('tambah-pengurus');
         Route::post('/pengurus/kirim-pengurus', [PengurusController::class, 'store'])->name('kirim-pengurus');
         Route::get('/pengurus/edit-pengurus/{id}', [PengurusController::class, 'edit'])->name('edit-pengurus');
@@ -91,12 +92,14 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         route::get('/pengguna/hapus-pengguna/{id}', [UserController::class, 'destroy'])->name('hapus-pengguna');
 
         route::get('/surat-masuk', [SuratMasukController::class, 'index'])->name('surat-masuk');
+        route::get('/surat-masuk/{id}', [SuratMasukController::class, 'periodesuratmasuk'])->name('periode-surat-masuk');
         route::post('/surat-masuk/kirim-surat-masuk', [SuratMasukController::class, 'store'])->name('kirim-surat-masuk');
         route::post('/surat-masuk/update-surat-masuk/{id}', [SuratMasukController::class, 'update'])->name('update-surat-masuk');
         route::get('/surat-masuk/hapus-surat-masuk/{id}', [SuratMasukController::class, 'destroy'])->name('hapus-surat-masuk');
         route::get('/surat-masuk/download-surat-masuk/{id}', [SuratMasukController::class, 'download'])->name('download-surat-masuk');
 
         route::get('/surat-keluar', [SuratKeluarController::class, 'index'])->name('surat-keluar');
+        route::get('/surat-keluar/{id}', [SuratKeluarController::class, 'periodesuratkeluar'])->name('periode-surat-keluar');
         route::post('/surat-keluar/kirim-surat-keluar', [SuratKeluarController::class, 'store'])->name('kirim-surat-keluar');
         route::post('/surat-keluar/update-surat-keluar/{id}', [SuratKeluarController::class, 'update'])->name('update-surat-keluar');
         route::get('/surat-keluar/hapus-surat-keluar/{id}', [SuratKeluarController::class, 'destroy'])->name('hapus-surat-keluar');

@@ -2,7 +2,22 @@
 
 @section('konten')
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Surat Keluar</h1>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Surat Keluar</h1>
+        <div class="dropdown">
+            <a class="btn btn-sm btn-primary shadow-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                aria-expanded="false">
+                Periode {{ $periodepilihan }}
+            </a>
+
+            <div class="dropdown-menu">
+                @foreach ($periodes as $prd)
+                    <a class="dropdown-item" href="{{ route('periode-surat-keluar', $prd->periode) }}">Periode
+                        {{ $prd->periode }}</a>
+                @endforeach
+            </div>
+        </div>
+    </div>
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}

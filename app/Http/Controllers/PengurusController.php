@@ -21,14 +21,36 @@ class PengurusController extends Controller
      */
     public function index()
     {
+        if (Pengurus::count() < 1) {
+            $periodepilihan = "kosong";
+        } else {
+            $periodeterbaru = Pengurus::select('periode')->groupBy('periode')->latest()->first();
+            $periodepilihan = $periodeterbaru->periode;
+        }
+        $periodes = Pengurus::select('periode')->groupBy('periode')->get();
         $pengurus = DB::table('pengurus')
             ->join('anggota', 'pengurus.nim', '=', 'anggota.nim')
             ->join('bidang', 'pengurus.id_bidang', '=', 'bidang.id')
             ->join('jabatan', 'pengurus.id_jabatan', '=', 'jabatan.id')
             ->select('pengurus.*', 'anggota.nama', 'bidang.bidang', 'jabatan.jabatan')
+            ->where('pengurus.periode', $periodepilihan)
             ->get();
         $bidang = Bidang::select('id', 'bidang')->get();
-        return view('admin.pengurus.pengurus', compact('pengurus', 'bidang'));
+        return view('admin.pengurus.pengurus', compact('pengurus', 'bidang', 'periodepilihan', 'periodes'));
+    }
+
+    public function periodepengurus($periodepilihan)
+    {
+        $periodes = Pengurus::select('periode')->groupBy('periode')->get();
+        $pengurus = DB::table('pengurus')
+            ->join('anggota', 'pengurus.nim', '=', 'anggota.nim')
+            ->join('bidang', 'pengurus.id_bidang', '=', 'bidang.id')
+            ->join('jabatan', 'pengurus.id_jabatan', '=', 'jabatan.id')
+            ->select('pengurus.*', 'anggota.nama', 'bidang.bidang', 'jabatan.jabatan')
+            ->where('pengurus.periode', $periodepilihan)
+            ->get();
+        $bidang = Bidang::select('id', 'bidang')->get();
+        return view('admin.pengurus.pengurus', compact('pengurus', 'bidang', 'periodepilihan', 'periodes'));
     }
 
     public function carijabatan(Request $request)

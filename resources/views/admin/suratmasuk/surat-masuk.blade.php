@@ -2,7 +2,22 @@
 
 @section('konten')
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Surat Masuk</h1>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Surat Masuk</h1>
+        <div class="dropdown">
+            <a class="btn btn-sm btn-primary shadow-sm dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                aria-expanded="false">
+                Periode {{ $periodepilihan }}
+            </a>
+
+            <div class="dropdown-menu">
+                @foreach ($periodes as $prd)
+                    <a class="dropdown-item" href="{{ route('periode-surat-masuk', $prd->periode) }}">Periode
+                        {{ $prd->periode }}</a>
+                @endforeach
+            </div>
+        </div>
+    </div>
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -102,8 +117,8 @@
                             <div class="form-group col-sm-6">
                                 <label for="instansi">Sumber</label>
                                 <input type="text" class="form-control @error('instansi') is-invalid @enderror"
-                                    id="instansi" name="instansi" placeholder="Sumber Surat" value="{{ old('instansi') }}"
-                                    required>
+                                    id="instansi" name="instansi" placeholder="Sumber Surat"
+                                    value="{{ old('instansi') }}" required>
                                 @error('instansi')
                                     <div class="alert alert-danger">{{ $message }}
                                         <button type="button" class="close" data-dismiss="alert">×</button>

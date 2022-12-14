@@ -18,8 +18,22 @@ class SuratKeluarController extends Controller
      */
     public function index()
     {
-        $surat = SuratKeluar::all();
-        return view('admin.suratkeluar.surat-keluar', compact('surat'));
+        if (SuratKeluar::count() < 1) {
+            $periodepilihan = "kosong";
+        } else {
+            $periodeterbaru = SuratKeluar::select('periode')->groupBy('periode')->latest()->first();
+            $periodepilihan = $periodeterbaru->periode;
+        }
+        $periodes = SuratKeluar::select('periode')->groupBy('periode')->get();
+        $surat = SuratKeluar::where('periode', $periodepilihan)->get();
+        return view('admin.suratkeluar.surat-keluar', compact('surat', 'periodes', 'periodepilihan'));
+    }
+
+    public function periodesuratkeluar($periodepilihan)
+    {
+        $periodes = SuratKeluar::select('periode')->groupBy('periode')->get();
+        $surat = SuratKeluar::where('periode', $periodepilihan)->get();
+        return view('admin.suratkeluar.surat-keluar', compact('surat', 'periodes', 'periodepilihan'));
     }
 
     /**

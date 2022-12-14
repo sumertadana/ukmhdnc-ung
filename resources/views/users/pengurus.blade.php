@@ -6,14 +6,25 @@
         use App\Models\Bidang;
         use App\Models\Jabatan;
         use App\Models\Anggota;
+
+        if (Pengurus::count() < 1) {
+            $periodepilihan = 'kosong';
+        } else {
+            $periodeterbaru = Pengurus::select('periode')
+                ->groupBy('periode')
+                ->latest()
+                ->first();
+            $periodepilihan = $periodeterbaru->periode;
+        }
     @endphp
     @foreach ($bidang as $bdg)
         <h1 class="fs-3 fw-bold text-center mb-3 mt-3">{{ $bdg->bidang }}</h1>
         @php
             $anggota = Pengurus::join('anggota', 'pengurus.nim', 'anggota.nim')
                 ->join('jabatan', 'pengurus.id_jabatan', 'jabatan.id')
-                ->select('anggota.nama', 'pengurus.foto', 'jabatan.jabatan')
+                ->select('anggota.nama', 'pengurus.foto', 'pengurus.periode', 'jabatan.jabatan')
                 ->where('pengurus.id_bidang', $bdg->id)
+                ->where('pengurus.periode', $periodepilihan)
                 ->get();
         @endphp
         <div class="row py-3 container-fluid">

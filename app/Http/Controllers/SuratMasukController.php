@@ -18,8 +18,22 @@ class SuratMasukController extends Controller
      */
     public function index()
     {
-        $surat = SuratMasuk::all();
-        return view('admin.suratmasuk.surat-masuk', compact('surat'));
+        if (SuratMasuk::count() < 1) {
+            $periodepilihan = "kosong";
+        } else {
+            $periodeterbaru = SuratMasuk::select('periode')->groupBy('periode')->latest()->first();
+            $periodepilihan = $periodeterbaru->periode;
+        }
+        $periodes = SuratMasuk::select('periode')->groupBy('periode')->get();
+        $surat = SuratMasuk::where('periode', $periodepilihan)->get();
+        return view('admin.suratmasuk.surat-masuk', compact('surat', 'periodes', 'periodepilihan'));
+    }
+
+    public function periodesuratmasuk($periodepilihan)
+    {
+        $periodes = SuratMasuk::select('periode')->groupBy('periode')->get();
+        $surat = SuratMasuk::where('periode', $periodepilihan)->get();
+        return view('admin.suratmasuk.surat-masuk', compact('surat', 'periodes', 'periodepilihan'));
     }
 
     /**
