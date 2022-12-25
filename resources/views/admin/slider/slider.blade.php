@@ -89,6 +89,7 @@
                                 <label for="gambar">Gambar</label>
                                 <input type="file" class="form-control required" id="gambar" name="gambar"
                                     placeholder="Masukan Gambar" value="">
+                                <small class="text-muted">Format : JPG | 4 X 3 | Maks : 1MB</small>
                                 @error('gambar')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror

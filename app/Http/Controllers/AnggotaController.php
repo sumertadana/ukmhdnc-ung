@@ -144,6 +144,14 @@ class AnggotaController extends Controller
             return back()->withErrors($validator)->withInput()->with('error', 'Data Gagal Diupdate !!!');
         }
         $update = Anggota::find($id);
+        if ($request->nim != $update->nim) {
+            $pengurus = Pengurus::where('nim', $update->nim)->first();
+            $pengurus->Update(
+                [
+                    'nim' => $request->nim
+                ]
+            );
+        }
         $update->Update(
             [
                 'nama' => $request->nama,

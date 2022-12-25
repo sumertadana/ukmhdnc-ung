@@ -91,13 +91,22 @@ class PengurusController extends Controller
      */
     public function store(Request $request)
     {
+        $cekanggota = Anggota::where('nama', $request->nama)->where('nim', $request->nim)->get();
+        if ($cekanggota->count() < 1) {
+            return redirect()->back()->with('error', "Data anggota tidak ditemukan, silahkan tambahkan data anggota terlebih dahulu !!! ");
+        }
+        $cekpengurus = Pengurus::where('nim', $request->nim)->where('periode', $request->periode)->get();
+
+        if ($cekpengurus->count() > 0) {
+            return redirect()->back()->with('error', 'Data ' . $request->nama . ' pada pengurus periode ' . $request->periode . ' sudah ada, silahkan cek kembali!!!');
+        }
         $validator = Validator::make(
             $request->all(),
             [
                 'nama' => 'required|string|max:100',
                 'nim' => 'required|string|min:9|max:9',
                 'periode' => 'required|string|max:9|min:9',
-                'foto' => 'required|file|image|mimes:jpg|max:1024',
+                'foto' => 'required|file|image|mimes:jpg|max:500',
                 'bidang' => 'required|string',
                 'jabatan' => 'required|string'
             ]
@@ -164,14 +173,17 @@ class PengurusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request);
+        $cekanggota = Anggota::where('nama', $request->nama)->where('nim', $request->nim)->get();
+        if ($cekanggota->count() < 1) {
+            return redirect()->back()->withInput()->with('error', "Data anggota tidak sesuai, mohon cek kembali !!! ");
+        }
         $validator = Validator::make(
             $request->all(),
             [
                 'nama' => 'required|string|max:100',
                 'nim' => 'required|string|min:9|max:9',
                 'periode' => 'required|string|max:9|min:9',
-                'foto' => 'file|image|mimes:jpg|max:1024',
+                'foto' => 'file|image|mimes:jpg|max:500',
                 'bidang' => 'required|string',
                 'jabatan' => 'required|string'
             ]

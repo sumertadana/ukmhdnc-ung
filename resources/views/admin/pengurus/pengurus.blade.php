@@ -49,7 +49,6 @@
                             <th>NIM</th>
                             <th>Bidang</th>
                             <th>Jabatan</th>
-                            <th>Periode</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -63,7 +62,6 @@
                                 <td>{{ $pgr->nim }}</td>
                                 <td>{{ $pgr->bidang }}</td>
                                 <td>{{ $pgr->jabatan }}</td>
-                                <td>{{ $pgr->periode }}</td>
                                 <td>
                                     <a href="{{ route('edit-pengurus', $pgr->id) }}"
                                         class="btn btn-sm btn-primary shadow"><i class="fa fa-edit"></i></a>
@@ -107,7 +105,7 @@
                             <div class="form-group col-sm-6">
                                 <label for="nim">NIM</label>
                                 <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim"
-                                    name="nim" placeholder="Masukan NIM" value="{{ old('nim') }}">
+                                    name="nim" placeholder="000000000" value="{{ old('nim') }}">
                                 @error('nim')
                                     <div class="alert alert-danger">{{ $message }}
                                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -144,8 +142,8 @@
                             <div class="form-group col-sm-6">
                                 <label for="periode">Periode</label>
                                 <input type="text" class="form-control @error('periode') is-invalid @enderror"
-                                    id="periode" name="periode" placeholder="Masukan Periode"
-                                    value="{{ old('periode') }}" required>
+                                    id="periode" name="periode" placeholder="0000-0000" value="{{ old('periode') }}"
+                                    required>
                                 @error('periode')
                                     <div class="alert alert-danger">{{ $message }}
                                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -156,6 +154,7 @@
                                 <label for="foto">Foto</label>
                                 <input type="file" class="form-control @error('foto') is-invalid @enderror"
                                     id="foto" name="foto" value="">
+                                <small class="text-muted">Format : JPG | 3 X 3 | Maks : 500kb</small>
                                 @error('foto')
                                     <div class="alert alert-danger">{{ $message }}
                                         <button type="button" class="close" data-dismiss="alert">×</button>
