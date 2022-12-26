@@ -74,6 +74,8 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::get('/berita/edit-berita/{id}', [BeritaController::class, 'edit'])->name('edit-berita');
         Route::post('/berita/update-berita/{id}', [BeritaController::class, 'update'])->name('update-berita');
         Route::get('/berita/hapus-berita/{id}', [BeritaController::class, 'destroy'])->name('hapus-berita');
+        Route::get('/berita/komentar-berita/{id}', [BeritaController::class, 'komentar'])->name('komentar-berita');
+        Route::get('/berita/komentar-berita/hapus-komentar/{id}', [BeritaController::class, 'hapuskomentar'])->name('hapus-komentar');
 
         Route::get('/slider', [SliderController::class, 'index'])->name('slider');
         Route::post('/slider/kirim-slider', [SliderController::class, 'store'])->name('kirim-slider');

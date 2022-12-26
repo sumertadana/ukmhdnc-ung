@@ -243,4 +243,22 @@ class BeritaController extends Controller
 
         return redirect()->back();
     }
+
+    public function komentar($id)
+    {
+        $komentar1 = Komentar::where('id_berita', $id)->latest()->get();
+        $komentar2 = Komentar2::where('id_berita', $id)->latest()->get();
+        return view('admin.berita.komentar', compact('komentar1', 'komentar2'));
+    }
+
+    public function hapuskomentar($id)
+    {
+        $k1 = Komentar::find($id);
+        if ($k1->count() > 0) {
+            $k1->delete();
+        } else {
+            $k2 = Komentar2::find($id)->delete();
+        }
+        return redirect()->back()->with('success', 'Komentar berhasil dihapus');
+    }
 }

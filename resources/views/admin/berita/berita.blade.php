@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 
 @section('konten')
+    @php
+        use App\Models\Komentar;
+        use App\Models\Komentar2;
+    @endphp
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Berita</h1>
     @if (session('success'))
@@ -45,7 +49,12 @@
                                 <td>{{ $brt->penulis }}</td>
                                 <td>{{ $brt->bidang }}</td>
                                 <td>{{ $brt->view }}</td>
-                                <td>{{ $brt->komentar }}</td>
+                                @php
+                                    $jumlahkomen1 = Komentar::where('id_berita', $brt->id)->get();
+                                    $jumlahkomen2 = Komentar2::where('id_berita', $brt->id)->get();
+                                    $jumlah = count($jumlahkomen1) + count($jumlahkomen2);
+                                @endphp
+                                <td> <a href="{{ route('komentar-berita', $brt->id) }}">{{ $jumlah }}</a></td>
                                 <td><img src="{{ asset('assets/img/berita/' . $brt->gambar) }}" alt=""
                                         height="75"></td>
                                 <td class="px-1">
