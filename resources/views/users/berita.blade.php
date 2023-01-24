@@ -7,10 +7,10 @@
             <!-- Post header-->
             <header class="mb-4">
                 <!-- Post title-->
-                <h1 class="fw-bolder mb-1 ">{{ $berita->judul }}</h1>
+                <h1 class="fw-bolder fs-1 mb-1 ">{{ $berita->judul }}</h1>
                 <!-- Post meta content-->
 
-                <span class="text-muted fst-italic mb-2">Diposting pada {{ date('d F Y', strtotime($berita->created_at)) }}
+                <span class="text-muted fs-6 mb-2">Diposting pada {{ date('d F Y', strtotime($berita->created_at)) }}
                     oleh
                     {{ $berita->penulis }}
                 </span>
